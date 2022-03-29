@@ -17,6 +17,7 @@ const InputForm = ({}) => {
     if (validateFn) {
       valid = validateFn(value);
     }
+    console.log(valid);
     if (valid) {
       setFuelUp({
         ...fuelUp,
@@ -37,29 +38,31 @@ const InputForm = ({}) => {
 
   const validatePattern = (value, pattern) => {
     const regex = RegExp(pattern);
-    console.log(regex);
     return regex.test(value);
   };
 
   const validateTrip = (value) => {
-    // this regex works and is solid
+    // this regex works as intended
     // prettier-ignore
     return validatePattern(value, "^$|^[0-9]+\\.??[0-9]??$");
   };
 
   const validateOdometer = (value) => {
+    // this regex works as intended
     // prettier-ignore
-    return validatePattern(value, "[0-9.]*");
+    return validatePattern(value, "^$|^[0-9]{1,6}?$");
   };
 
-  const ValidateGallonsOrPPG = (value) => {
+  const validateGallonsOrPPG = (value) => {
+    // this regex works as intended
     // prettier-ignore
-    return validatePattern(value, "[0-9.]*");
+    return validatePattern(value, "^$|^[0-9]\\.??[0-9]{0,3}?$");
   };
 
   const validateTotal = (value) => {
+    // this regex works as intended
     // prettier-ignore
-    return validatePattern(value, "[0-9.]*");
+    return validatePattern(value, "^$|^[0-9]*\\.??[0-9]{0,2}?$");
   };
 
   return (
@@ -68,7 +71,7 @@ const InputForm = ({}) => {
         id="car"
         name="car"
         labelText="Car"
-        defaultValue={fuelUp["car"]}
+        defaultValue={fuelUp.car}
         handleChange={(e) => {
           e.preventDefault();
           const v = e.target.value;
@@ -79,7 +82,7 @@ const InputForm = ({}) => {
         id="trip"
         name="trip"
         labelText="Trip"
-        defaultValue={fuelUp["trip"]}
+        defaultValue={fuelUp.trip}
         handleChange={(e) => {
           e.preventDefault();
           const v = e.target.value;
@@ -90,29 +93,29 @@ const InputForm = ({}) => {
         id="gallons"
         name="gallons"
         labelText="Gallons"
-        defaultValue={fuelUp["gallons"]}
+        defaultValue={fuelUp.gallons}
         handleChange={(e) => {
           e.preventDefault();
           const v = e.target.value;
-          handleObjectInput(v, "gallons", ValidateGallonsOrPPG);
+          handleObjectInput(v, "gallons", validateGallonsOrPPG);
         }}
       />
       <FormInput
         id="price"
         name="price"
         labelText="Price"
-        defaultValue={fuelUp["price"]}
+        defaultValue={fuelUp.price}
         handleChange={(e) => {
           e.preventDefault();
           const v = e.target.value;
-          handleObjectInput(v, "price", ValidateGallonsOrPPG);
+          handleObjectInput(v, "price", validateGallonsOrPPG);
         }}
       />
       <FormInput
         id="total"
         name="total"
         labelText="Total"
-        defaultValue={fuelUp["total"]}
+        defaultValue={fuelUp.total}
         handleChange={(e) => {
           e.preventDefault();
           const v = e.target.value;
@@ -123,7 +126,7 @@ const InputForm = ({}) => {
         id="odometer"
         name="odometer"
         labelText="Odometer"
-        defaultvalue={fuelUp["odometer"]}
+        defaultValue={fuelUp.odometer}
         handleChange={(e) => {
           e.preventDefault();
           const v = e.target.value;
