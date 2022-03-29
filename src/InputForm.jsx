@@ -37,27 +37,29 @@ const InputForm = ({}) => {
 
   const validatePattern = (value, pattern) => {
     const regex = RegExp(pattern);
+    console.log(regex);
     return regex.test(value);
   };
 
   const validateTrip = (value) => {
+    // this regex works and is solid
     // prettier-ignore
-    return validatePattern(value, "^[0-9.]*$");
+    return validatePattern(value, "^$|^[0-9]+\\.??[0-9]??$");
   };
 
   const validateOdometer = (value) => {
     // prettier-ignore
-    return validatePattern(value, "^[0-9.]*$");
+    return validatePattern(value, "[0-9.]*");
   };
 
   const ValidateGallonsOrPPG = (value) => {
     // prettier-ignore
-    return validatePattern(value, "^[0-9.]*$");
+    return validatePattern(value, "[0-9.]*");
   };
 
   const validateTotal = (value) => {
     // prettier-ignore
-    return validatePattern(value, "^[0-9.]*$");
+    return validatePattern(value, "[0-9.]*");
   };
 
   return (
