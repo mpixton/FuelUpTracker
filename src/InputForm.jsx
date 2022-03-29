@@ -3,24 +3,14 @@ import styles from "../styles/InputForm.module.css";
 import FormInput from "./FormInput";
 
 const InputForm = ({}) => {
-  const [car, setCar] = useState("");
-  const [trip, setTrip] = useState("");
-  const [gallons, setGallons] = useState("");
-  const [price, setPrice] = useState("");
-  const [total, setTotal] = useState("");
-  const [odometer, setOdometer] = useState("");
-
-  const [fuelUp, setFuelUp] = useState({});
-
-  const handleInput = (value, updateStateFn, validateFn) => {
-    let valid = true;
-    if (validateFn) {
-      valid = validateFn(value);
-    }
-    if (valid) {
-      updateStateFn(value);
-    }
-  };
+  const [fuelUp, setFuelUp] = useState({
+    car: "",
+    trip: "",
+    gallons: "",
+    total: "",
+    price: "",
+    odometer: "",
+  });
 
   const handleObjectInput = (value, propName, validateFn) => {
     let valid = true;
@@ -28,83 +18,121 @@ const InputForm = ({}) => {
       valid = validateFn(value);
     }
     if (valid) {
-      const update = {
+      setFuelUp({
         ...fuelUp,
-      };
-      update[propName] = value;
-      setFuelUp(update);
+        [propName]: value,
+      });
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(fuelUp);
+  };
+
+  // REGEX for trip /^\d*\.?\d{0,1}$/
+  // REGEX for odometer /^\d{1-6}$/
+  // REGEX for gallons, price /^\d{1,2}\.\d{3}$/
+  // REGEX for total /^\d*\.?\d{0,2}?$/
+
+  const validatePattern = (value, pattern) => {
+    const regex = RegExp(pattern);
+    return regex.test(value);
+  };
+
+  const validateTrip = (value) => {
+    // prettier-ignore
+    return validatePattern(value, "^[0-9.]*$");
+  };
+
+  const validateOdometer = (value) => {
+    // prettier-ignore
+    return validatePattern(value, "^[0-9.]*$");
+  };
+
+  const ValidateGallonsOrPPG = (value) => {
+    // prettier-ignore
+    return validatePattern(value, "^[0-9.]*$");
+  };
+
+  const validateTotal = (value) => {
+    // prettier-ignore
+    return validatePattern(value, "^[0-9.]*$");
+  };
+
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <FormInput
         id="car"
         name="car"
         labelText="Car"
-        defaultValue={car}
+        defaultValue={fuelUp["car"]}
         handleChange={(e) => {
           e.preventDefault();
-          handleInput(e.target.value, setCar);
+          const v = e.target.value;
+          handleObjectInput(v, "car");
         }}
       />
       <FormInput
         id="trip"
         name="trip"
         labelText="Trip"
-        defaultValue={trip}
+        defaultValue={fuelUp["trip"]}
         handleChange={(e) => {
           e.preventDefault();
-          handleInput(e.target.value, setTrip);
+          const v = e.target.value;
+          handleObjectInput(v, "trip", validateTrip);
         }}
       />
       <FormInput
         id="gallons"
         name="gallons"
         labelText="Gallons"
-        defaultValue={gallons}
+        defaultValue={fuelUp["gallons"]}
         handleChange={(e) => {
           e.preventDefault();
-          handleInput(e.target.value, setGallons);
+          const v = e.target.value;
+          handleObjectInput(v, "gallons", ValidateGallonsOrPPG);
         }}
       />
       <FormInput
         id="price"
         name="price"
         labelText="Price"
-        defaultValue={price}
+        defaultValue={fuelUp["price"]}
         handleChange={(e) => {
           e.preventDefault();
-          handleInput(e.target.value, setPrice);
+          const v = e.target.value;
+          handleObjectInput(v, "price", ValidateGallonsOrPPG);
         }}
       />
       <FormInput
         id="total"
         name="total"
         labelText="Total"
-        defaultValue={total}
+        defaultValue={fuelUp["total"]}
         handleChange={(e) => {
           e.preventDefault();
-          handleInput(e.target.value, setTotal);
+          const v = e.target.value;
+          handleObjectInput(v, "total", validateTotal);
         }}
       />
       <FormInput
         id="odometer"
         name="odometer"
         labelText="Odometer"
-        value={odometer}
+        defaultvalue={fuelUp["odometer"]}
         handleChange={(e) => {
           e.preventDefault();
-          handleInput(e.target.value, setOdometer);
+          const v = e.target.value;
+          handleObjectInput(v, "odometer", validateOdometer);
         }}
       />
       <button
         type="submit"
         className={styles.submitBtn}
         onClick={(e) => {
-          e.preventDefault();
-          console.log(car, trip, gallons, total, odometer);
-          // alert("Submit was clicked.");
+          alert("Submit was clicked.");
         }}
       >
         Submit
