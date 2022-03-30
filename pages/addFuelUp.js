@@ -9,7 +9,9 @@ export default function AddFuelUp() {
       <Head>
         <title>Fuel Tracker</title>
       </Head>
-      <InputForm></InputForm>
+      <div className={styles.centerForm}>
+        <InputForm />
+      </div>
     </>
   );
 }
