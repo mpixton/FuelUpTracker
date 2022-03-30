@@ -1,0 +1,25 @@
+.listDisplay {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    place-items: center;
+    margin: 0 2rem;
+}
+
+.colHeader {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+}
+
+.navBar {
+    display: grid;
+    grid-template-rows: 1fr;
+    place-items: center;
+}
+
+.emptyList {
+    padding: 2rem;
+    font-size: var(--font-size-xl);
+    color: var(--secondary-color);
+    font-weight: 600;
+    grid-column: 1 / -1;
+}
