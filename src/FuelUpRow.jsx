@@ -1,17 +1,9 @@
-import react from "react";
+import React from "react";
 import styles from "../styles/FuelUpRow.module.css";
 
-export const FuelUpRow = ({
-  total,
-  ppg,
-  gallons,
-  trip,
-  odometer,
-  car,
-  key,
-}) => {
+const FuelUpRow = ({ total, ppg, gallons, trip, odometer, car, key }) => {
   return (
-    <div className={styles.fuelUpRow} key={key}>
+    <React.Fragment key={key}>
       <div>{car}</div>
       <div>{trip}</div>
       <div>{odometer}</div>
@@ -19,6 +11,8 @@ export const FuelUpRow = ({
       <div>{total}</div>
       <div>{ppg}</div>
       <div>{trip / gallons}</div>
-    </div>
+    </React.Fragment>
   );
 };
+
+export default FuelUpRow;
