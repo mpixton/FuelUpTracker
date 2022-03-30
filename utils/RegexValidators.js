@@ -23,7 +23,7 @@ export const validateOdometer = (value) => {
 export const validateGallonsOrPPG = (value) => {
   // this regex works as intended
   // prettier-ignore
-  return validatePattern(value, "^$|^[0-9]\\.??[0-9]{0,3}?$");
+  return validatePattern(value, "^$|^[0-9]{1,2}\\.??[0-9]{0,3}?$");
 };
 
 export const validateTotal = (value) => {

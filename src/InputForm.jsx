@@ -7,8 +7,10 @@ import {
 } from "../utils/RegexValidators";
 import styles from "../styles/InputForm.module.css";
 import FormInput from "./FormInput";
+import { useRouter } from "next/router";
 
 const InputForm = ({}) => {
+  const router = useRouter();
   const [fuelUp, setFuelUp] = useState({
     car: "",
     trip: "",
@@ -33,7 +35,18 @@ const InputForm = ({}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(fuelUp);
+    fetch("/api/fuelUp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(fuelUp),
+    }).then((res) => {
+      if (res.ok) {
+        router.push("/");
+      }
+    });
   };
 
   return (

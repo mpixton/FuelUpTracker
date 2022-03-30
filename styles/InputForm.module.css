@@ -13,7 +13,6 @@
 .submitBtn {
     grid-column: 1 / span 2;
     justify-self: center;
-    cursor: default;
 }
 
 .addCar {
@@ -24,11 +23,4 @@
     border-radius: 0.25rem;
     transition: outline var(--input-animation-duration);
     padding: 0.25rem 0.5rem;
-}
-
-.addCar:active,
-.addCar:focus,
-.addCar:hover {
-    outline: var(--secondary-color) solid var(--focus-outline-width);
-    outline-offset: var(--focus-outline-offset);
 }
