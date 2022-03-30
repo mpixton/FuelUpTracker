@@ -34,9 +34,6 @@ body {
 }
 
 main {
-  display: grid;
-  grid-template-columns: 1fr;
-  place-items: center center;
   height: 100vh;
   width: 100vw;
 }
@@ -89,4 +86,6 @@ button {
   font-size: var(--font-size-large);
   outline: none;
   transition: outline var(--input-animation-duration);
+  margin: calc(var(--focus-outline-offset) + var(--focus-outline-width) * 2);
+  cursor: default;
 }
