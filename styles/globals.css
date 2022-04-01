@@ -23,6 +23,9 @@
 
   --focus-outline-width: 4px;
   --focus-outline-offset: 2px;
+
+  --btn-padding-x-normal: 0.75rem;
+  --btn-padding-y-normal: 0.5rem;
 }
 
 html,
@@ -52,6 +55,10 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+button {
+  all: unset;
 }
 
 select {
