@@ -4,14 +4,16 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 import FuelUpRow from "../src/FuelUpRow";
+import PaginationControls from "../src/PaginationControls";
 
-export default function Home() {
+export default () => {
   const router = useRouter();
   const [fuelUps, setFuelUps] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [totalFuelUps, setTotalFuelUps] = useState(0);
 
-  const fetchFuelUps = () => {
-    fetch("/api/fuelUp")
+  const fetchFuelUps = (pageNum) => {
+    fetch(`/api/fuelUp?pageNum=${pageNum ?? 1}`)
       .then((res) => res.json())
       .then(({ data }) => {
         setFuelUps(data);
@@ -20,9 +22,21 @@ export default function Home() {
     setLoading(false);
   };
 
+  const fetchTotalItems = () => {
+    fetch("/api/pagination")
+      .then((res) => res.json())
+      .then(({ totalItems }) => setTotalFuelUps(totalItems))
+      .catch(console.log);
+  };
+
   useEffect(() => {
-    fetchFuelUps();
-  }, [loading]);
+    fetchTotalItems();
+  }, []);
+
+  useEffect(() => {
+    const { pageNum } = router.query;
+    fetchFuelUps(pageNum);
+  }, [loading, router.query]);
 
   return (
     <>
@@ -45,7 +59,7 @@ export default function Home() {
             <FuelUpRow
               car={e.car}
               gallons={e.gallons}
-              key={i.toString()}
+              passedKey={i.toString()}
               odometer={e.odometer}
               ppg={e.price}
               total={e.total}
@@ -58,6 +72,14 @@ export default function Home() {
           </div>
         )}
       </div>
+      <div className={styles.pagination}>
+        <PaginationControls
+          pageNum={Number.parseInt(router.query["pageNum"], 10) ?? 1}
+          pageSize={20}
+          totalItems={totalFuelUps}
+          urlBase={router.basePath}
+        />
+      </div>
     </>
   );
-}
+};
