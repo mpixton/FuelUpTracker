@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "../styles/FuelUpRow.module.css";
 
-const FuelUpRow = ({ total, ppg, gallons, trip, odometer, car, key }) => {
+const FuelUpRow = ({ total, ppg, gallons, trip, odometer, car, passedKey }) => {
   return (
-    <React.Fragment key={key}>
+    <React.Fragment key={passedKey}>
       <div>{car}</div>
       <div>{odometer} miles</div>
       <div>{gallons} gallons</div>
