@@ -2,34 +2,35 @@ import React from "react";
 import { useRouter } from "next/router";
 
 import styles from "../styles/PaginationControls.module.css";
+import Button from "./Button";
 
 const PaginationControls = ({ totalItems, pageSize, pageNum, urlBase }) => {
   const router = useRouter();
   const totalPages = Math.floor(totalItems / pageSize);
-  const hasPreviousPage = !(pageNum > 1);
-  const hasNextPage = !(pageNum < totalPages);
+  const hasPreviousPage = pageNum > 1;
+  const hasNextPage = pageNum < totalPages;
 
   return (
     <div className={styles.paginationBar}>
-      <button
-        disabled={hasPreviousPage}
-        className={styles.previous}
+      <Button
+        enabled={hasPreviousPage}
+        color="secondary"
+        text="Previous"
+        type="button"
         onClick={() => {
-          router.push(`${urlBase}?pageNum=${pageNum - 1}`);
+          router.push(`${urlBase}?pageNum=${parseInt(pageNum, 10) - 1}`);
         }}
-      >
-        Previous
-      </button>
+      />
       <div className={styles.pageNum}>Page {pageNum}</div>
-      <button
-        disabled={hasNextPage}
-        className={styles.next}
+      <Button
+        enabled={hasNextPage}
+        color="secondary"
+        text="Next"
+        type="button"
         onClick={() => {
-          router.push(`${urlBase}?pageNum=${pageNum + 1}`);
+          router.push(`${urlBase}?pageNum=${parseInt(pageNum, 10) + 1}`);
         }}
-      >
-        Next
-      </button>
+      />
     </div>
   );
 };

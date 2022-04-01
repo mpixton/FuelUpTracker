@@ -13,33 +13,12 @@
     justify-content: center;
 }
 
-.previous,
-.next {
-    border: 2px solid var(--secondary-color);
-    border-radius: 0.5rem;
-    padding: 0.25rem 0.5rem;
-    cursor: default;
-    background-color: var(--secondary-color);
-    color: var(--white-font-color);
-}
-
-.previous:active,
-.next:active,
-.previous:hover,
-.next:hover,
-.previous:focus,
-.next:focus {
-    outline: var(--primary-color) solid var(--focus-outline-width);
-    outline-offset: var(--focus-outline-offset);
-}
-
 .previous {
     grid-column: 1;
 }
 
 .next {
     grid-column: 3;
-    text-align: center;
 }
 
 .pageNum {
