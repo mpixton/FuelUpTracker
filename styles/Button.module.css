@@ -1,0 +1,48 @@
+.btn {
+    all: unset;
+    min-width: 50px;
+    max-width: fit-content;
+    text-align: center;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: var(--font-size-normal);
+    outline: none;
+    transition: outline var(--input-animation-duration);
+    margin: calc(var(--focus-outline-offset) + var(--focus-outline-width) * 2);
+    cursor: default;
+}
+
+.primary {
+    background-color: var(--bg-primary);
+}
+
+.secondary {
+    background-color: var(--bg-secondary);
+    color: var(--font-white);
+}
+
+.white {
+    background-color: var(--bg-white);
+}
+
+.dark {
+    background-color: var(--bg-dark);
+    color: var(--font-white);
+}
+
+.btn:active,
+.btn:focus,
+.btn:hover {
+    outline: var(--secondary-color) solid var(--focus-outline-width);
+    outline-offset: var(--focus-outline-offset);
+}
+
+.dark:active,
+.secondary:active,
+.dark:focus,
+.secondary:focus,
+.dark:hover,
+.secondary:hover {
+    outline: var(--primary-color) solid var(--focus-outline-width);
+    outline-offset: var(--focus-outline-offset);
+}
