@@ -76,7 +76,7 @@ export default () => {
         <PaginationControls
           pageNum={Number.parseInt(router.query["pageNum"], 10) ?? 1}
           pageSize={20}
-          totalItems={totalFuelUps}
+          totalItems={Number.parseInt(totalFuelUps, 10)}
           urlBase={router.basePath}
         />
       </div>
