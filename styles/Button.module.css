@@ -3,7 +3,7 @@
     min-width: 50px;
     max-width: fit-content;
     text-align: center;
-    padding: 0.5rem 0.75rem;
+    padding: var(--btn-padding-y-normal) var(--btn-padding-x-normal);
     border-radius: 0.5rem;
     font-size: var(--font-size-normal);
     outline: none;
@@ -45,4 +45,23 @@
 .secondary:hover {
     outline: var(--primary-color) solid var(--focus-outline-width);
     outline-offset: var(--focus-outline-offset);
+}
+
+.xs {
+    font-size: var(--font-size-xs);
+    padding: 0.25rem 0.25rem;
+}
+
+.small {
+    font-size: var(--font-size-small);
+}
+
+.large {
+    font-size: var(--font-size-large);
+    padding: 0.5rem 1.25rem;
+}
+
+.xl {
+    font-size: var(--font-size-xl);
+    padding: 0.75rem 1.5rem;
 }
