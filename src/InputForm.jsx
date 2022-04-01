@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
   validateGallonsOrPPG,
   validateOdometer,
@@ -7,10 +8,9 @@ import {
 } from "../utils/RegexValidators";
 import styles from "../styles/InputForm.module.css";
 import FormInput from "./FormInput";
-import { useRouter } from "next/router";
+import Button from "./Button";
 
-const InputForm = ({}) => {
-  const router = useRouter();
+const InputForm = ({ onSubmit }) => {
   const [fuelUp, setFuelUp] = useState({
     car: "",
     trip: "",
@@ -33,20 +33,9 @@ const InputForm = ({}) => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    fetch("/api/fuelUp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(fuelUp),
-    }).then((res) => {
-      if (res.ok) {
-        router.push("/");
-      }
-    });
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    onSubmit(fuelUp);
   };
 
   return (
@@ -111,15 +100,16 @@ const InputForm = ({}) => {
           handleInput(e.target.value, "odometer", validateOdometer);
         }}
       />
-      <button
-        type="submit"
-        className={styles.submitBtn}
-        onClick={(e) => {
-          alert("Submit was clicked.");
-        }}
-      >
-        Submit
-      </button>
+      <div className={styles.submitBtn}>
+        <Button
+          type="submit"
+          text="Submit"
+          onClick={(e) => {
+            alert("Submit was clicked.");
+          }}
+          size="large"
+        />
+      </div>
     </form>
   );
 };
