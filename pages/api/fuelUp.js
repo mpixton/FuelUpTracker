@@ -4,7 +4,14 @@ const handler = async (req, res) => {
   const method = req.method;
 
   if (method === "GET") {
-    const fuelUps = await knex.select().from("fuelup");
+    // console.log(req.query);
+    const { pageNum } = req.query;
+    // console.log(pageNum);
+    const fuelUps = await knex
+      .select()
+      .from("fuelup")
+      .offset(pageNum * 20)
+      .limit(20);
 
     return res.status(200).json({ data: fuelUps });
   }
