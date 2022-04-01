@@ -5,9 +5,15 @@
   --white-color: #fff;
   --black-color: #000;
 
-  --white-font-color: #fff;
-  --black-font-color: #000;
+  --font-white: var(--white-color);
+  --font-black: var(--black-color);
 
+  --bg-primary: var(--primary-color);
+  --bg-secondary: var(--secondary-color);
+  --bg-dark: var(--dark-color);
+  --bg-white: var(--white-color);
+
+  --font-size-xs: 0.5rem;
   --font-size-small: 0.75rem;
   --font-size-normal: 1rem;
   --font-size-large: 1.25rem;
@@ -30,7 +36,7 @@ body {
   min-height: 100vh;
   min-width: 100vw;
   font-size: var(--font-size-normal);
-  color: var(--black-font-color);
+  color: var(--font-black);
 }
 
 main {
@@ -68,25 +74,7 @@ input:hover,
 input:focus,
 select:active,
 select:hover,
-select:focus,
-button:active,
-button:hover,
-button:focus {
+select:focus {
   outline: var(--secondary-color) solid var(--focus-outline-width);
   outline-offset: var(--focus-outline-offset);
-}
-
-button {
-  all: unset;
-  min-width: 50px;
-  max-width: fit-content;
-  background-color: var(--primary-color);
-  text-align: center;
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.5rem;
-  font-size: var(--font-size-large);
-  outline: none;
-  transition: outline var(--input-animation-duration);
-  margin: calc(var(--focus-outline-offset) + var(--focus-outline-width) * 2);
-  cursor: default;
 }
