@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import styles from "../styles/Home.module.css";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
+import styles from "../styles/Home.module.css";
+import Button from "../src/Button";
 import FuelUpRow from "../src/FuelUpRow";
 import PaginationControls from "../src/PaginationControls";
 
@@ -44,7 +45,7 @@ export default () => {
         <title>Fuel Tracker</title>
       </Head>
       <div className={styles.navBar}>
-        <button onClick={() => router.push("/addFuelUp")}>Add Fuel Up</button>
+        <Button text="Add Fuel Up" onClick={() => router.push("/addFuelUp")} />
       </div>
       <div className={styles.listDisplay}>
         <div className={styles.colHeader}>Car</div>
@@ -74,7 +75,7 @@ export default () => {
       </div>
       <div className={styles.pagination}>
         <PaginationControls
-          pageNum={Number.parseInt(router.query["pageNum"], 10) ?? 1}
+          pageNum={router.query["pageNum"] ?? 1}
           pageSize={20}
           totalItems={Number.parseInt(totalFuelUps, 10)}
           urlBase={router.basePath}
