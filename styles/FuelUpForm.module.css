@@ -6,7 +6,7 @@
     row-gap: 0.75rem;
     padding: 2rem;
     font-size: var(--font-size-xl);
-    border: black solid 2px;
+    border: var(--black-color) solid 2px;
     border-radius: 0.25rem;
 }
 
