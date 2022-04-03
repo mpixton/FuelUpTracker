@@ -5,13 +5,9 @@
  */
 module.exports = {
   development: {
-    client: "pg",
+    client: "better-sqlite3",
     connection: {
-      user: "fueltracker",
-      password: "secret",
-      host: "localhost",
-      port: 5874,
-      database: "fueltracker",
+      filename: "./fueltracker.sqlite",
     },
   },
 
