@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 import styles from "../styles/AddFuelUp.module.css";
-import InputForm from "../src/InputForm";
+import FuelUpForm from "../src/FuelUpForm";
 
 export default function AddFuelUp() {
   const router = useRouter();
@@ -33,7 +33,7 @@ export default function AddFuelUp() {
         <title>Fuel Tracker</title>
       </Head>
       <div className={styles.centerForm}>
-        <InputForm onSubmit={handleSubmit} />
+        <FuelUpForm onSubmit={handleSubmit} />
       </div>
     </>
   );
