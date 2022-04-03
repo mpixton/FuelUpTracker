@@ -14,11 +14,20 @@ const CarForm = ({ onSubmit, onCancel }) => {
     year: "",
   });
 
+  const [errors, setErrors] = useState({
+    name: "",
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    let tempErrors = { ...errors };
     if (carData.name === "") {
-      alert("Nickname must be filled out.");
+      tempErrors.name = "Nickname must be filled out.";
     }
+    setErrors({
+      ...errors,
+      ...tempErrors,
+    });
     onSubmit(carData);
   };
 
@@ -45,6 +54,7 @@ const CarForm = ({ onSubmit, onCancel }) => {
           );
         }}
       />
+      {errors.name && <div className={formStyles.error}>{errors.name}</div>}
       <Input
         id="make"
         name="make"

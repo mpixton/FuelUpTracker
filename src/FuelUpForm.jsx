@@ -21,8 +21,29 @@ const FuelUpForm = ({ onSubmit, onCancel }) => {
     odometer: "",
   });
 
+  const [errors, setErrors] = useState({
+    ...fuelUp,
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    let tempErrors = { ...errors };
+    let valid = true;
+    for (const prop in fuelUp) {
+      if (fuelUp[prop] === "") {
+        tempErrors[prop] = `${prop[0].toUpperCase()}${prop.slice(
+          1
+        )} is required.`;
+        valid = false;
+      }
+    }
+    if (!valid) {
+      setErrors({
+        ...errors,
+        ...tempErrors,
+      });
+      return;
+    }
     onSubmit(fuelUp);
   };
 
@@ -43,6 +64,7 @@ const FuelUpForm = ({ onSubmit, onCancel }) => {
           handleInput(e.target.value, "car", fuelUp, setFuelUp);
         }}
       />
+      {errors.car && <div className={formStyles.error}>{errors.car}</div>}
       <Input
         id="trip"
         name="trip"
@@ -53,6 +75,7 @@ const FuelUpForm = ({ onSubmit, onCancel }) => {
           handleInput(e.target.value, "trip", fuelUp, setFuelUp, validateTrip);
         }}
       />
+      {errors.trip && <div className={formStyles.error}>{errors.trip}</div>}
       <Input
         id="gallons"
         name="gallons"
@@ -69,6 +92,9 @@ const FuelUpForm = ({ onSubmit, onCancel }) => {
           );
         }}
       />
+      {errors.gallons && (
+        <div className={formStyles.error}>{errors.gallons}</div>
+      )}
       <Input
         id="price"
         name="price"
@@ -85,6 +111,7 @@ const FuelUpForm = ({ onSubmit, onCancel }) => {
           );
         }}
       />
+      {errors.price && <div className={formStyles.error}>{errors.price}</div>}
       <Input
         id="total"
         name="total"
@@ -101,6 +128,7 @@ const FuelUpForm = ({ onSubmit, onCancel }) => {
           );
         }}
       />
+      {errors.total && <div className={formStyles.error}>{errors.total}</div>}
       <Input
         id="odometer"
         name="odometer"
@@ -117,6 +145,9 @@ const FuelUpForm = ({ onSubmit, onCancel }) => {
           );
         }}
       />
+      {errors.odometer && (
+        <div className={formStyles.error}>{errors.odometer}</div>
+      )}
       <div className={formStyles.btnRow}>
         <Button
           type="button"

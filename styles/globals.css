@@ -7,6 +7,7 @@
 
   --font-white: var(--white-color);
   --font-black: var(--black-color);
+  --font-error: rgb(164, 35, 35);
 
   --bg-primary: var(--primary-color);
   --bg-secondary: var(--secondary-color);
