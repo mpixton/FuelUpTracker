@@ -31,3 +31,8 @@ export const validateTotal = (value) => {
   // prettier-ignore
   return validatePattern(value, "^$|^[0-9]*\\.??[0-9]{0,2}?$");
 };
+
+export const validateYear = (value) => {
+  // prettier-ignore
+  return validatePattern(value, "^[0-9]{0,4}$")
+};
