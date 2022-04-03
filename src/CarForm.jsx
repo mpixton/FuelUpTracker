@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import styles from "../styles/CarForm.module.css";
+import formStyles from "../styles/Forms.module.css";
 import Input from "./Input";
 import Button from "./Button";
 import { validateYear, validateHasTextInput } from "../utils/RegexValidators";
@@ -28,7 +28,7 @@ const CarForm = ({ onSubmit, onCancel }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
+    <form onSubmit={handleSubmit} className={formStyles.form}>
       <Input
         id="name"
         name="name"
@@ -81,7 +81,7 @@ const CarForm = ({ onSubmit, onCancel }) => {
           );
         }}
       />
-      <div className={styles.btnRow}>
+      <div className={formStyles.btnRow}>
         <Button
           type="button"
           text="Cancel"

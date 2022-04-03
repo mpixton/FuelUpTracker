@@ -7,7 +7,7 @@ import {
   validateTrip,
 } from "../utils/RegexValidators";
 import { handleInput } from "../utils/HandleFormInput";
-import styles from "../styles/FuelUpForm.module.css";
+import formStyles from "../styles/Forms.module.css";
 import Input from "./Input";
 import Button from "./Button";
 
@@ -32,7 +32,7 @@ const FuelUpForm = ({ onSubmit, onCancel }) => {
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form className={formStyles.form} onSubmit={handleSubmit}>
       <Input
         id="car"
         name="car"
@@ -117,7 +117,7 @@ const FuelUpForm = ({ onSubmit, onCancel }) => {
           );
         }}
       />
-      <div className={styles.btnRow}>
+      <div className={formStyles.btnRow}>
         <Button
           type="button"
           text="Cancel"
