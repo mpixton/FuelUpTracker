@@ -6,11 +6,12 @@ import {
   validateTotal,
   validateTrip,
 } from "../utils/RegexValidators";
+import { handleInput } from "../utils/HandleFormInput";
 import styles from "../styles/FuelUpForm.module.css";
 import Input from "./Input";
 import Button from "./Button";
 
-const FuelUpForm = ({ onSubmit }) => {
+const FuelUpForm = ({ onSubmit, onCancel }) => {
   const [fuelUp, setFuelUp] = useState({
     car: "",
     trip: "",
@@ -20,22 +21,14 @@ const FuelUpForm = ({ onSubmit }) => {
     odometer: "",
   });
 
-  const handleInput = (value, propName, validateFn) => {
-    let valid = true;
-    if (validateFn && typeof validateFn === "function") {
-      valid = validateFn(value);
-    }
-    if (valid) {
-      setFuelUp({
-        ...fuelUp,
-        [propName]: value,
-      });
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(fuelUp);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    onSubmit(fuelUp);
+  const handleCancel = (e) => {
+    e.preventDefault();
+    onCancel();
   };
 
   return (
@@ -47,7 +40,7 @@ const FuelUpForm = ({ onSubmit }) => {
         defaultValue={fuelUp.car}
         handleChange={(e) => {
           e.preventDefault();
-          handleInput(e.target.value, "car");
+          handleInput(e.target.value, "car", fuelUp, setFuelUp);
         }}
       />
       <Input
@@ -57,7 +50,7 @@ const FuelUpForm = ({ onSubmit }) => {
         defaultValue={fuelUp.trip}
         handleChange={(e) => {
           e.preventDefault();
-          handleInput(e.target.value, "trip", validateTrip);
+          handleInput(e.target.value, "trip", fuelUp, setFuelUp, validateTrip);
         }}
       />
       <Input
@@ -67,7 +60,13 @@ const FuelUpForm = ({ onSubmit }) => {
         defaultValue={fuelUp.gallons}
         handleChange={(e) => {
           e.preventDefault();
-          handleInput(e.target.value, "gallons", validateGallonsOrPPG);
+          handleInput(
+            e.target.value,
+            "gallons",
+            fuelUp,
+            setFuelUp,
+            validateGallonsOrPPG
+          );
         }}
       />
       <Input
@@ -77,7 +76,13 @@ const FuelUpForm = ({ onSubmit }) => {
         defaultValue={fuelUp.price}
         handleChange={(e) => {
           e.preventDefault();
-          handleInput(e.target.value, "price", validateGallonsOrPPG);
+          handleInput(
+            e.target.value,
+            "price",
+            fuelUp,
+            setFuelUp,
+            validateGallonsOrPPG
+          );
         }}
       />
       <Input
@@ -87,7 +92,13 @@ const FuelUpForm = ({ onSubmit }) => {
         defaultValue={fuelUp.total}
         handleChange={(e) => {
           e.preventDefault();
-          handleInput(e.target.value, "total", validateTotal);
+          handleInput(
+            e.target.value,
+            "total",
+            fuelUp,
+            setFuelUp,
+            validateTotal
+          );
         }}
       />
       <Input
@@ -97,10 +108,22 @@ const FuelUpForm = ({ onSubmit }) => {
         defaultValue={fuelUp.odometer}
         handleChange={(e) => {
           e.preventDefault();
-          handleInput(e.target.value, "odometer", validateOdometer);
+          handleInput(
+            e.target.value,
+            "odometer",
+            fuelUp,
+            setFuelUp,
+            validateOdometer
+          );
         }}
       />
-      <div className={styles.submitBtn}>
+      <div className={styles.btnRow}>
+        <Button
+          type="button"
+          text="Cancel"
+          onClick={handleCancel}
+          size="large"
+        />
         <Button
           type="submit"
           text="Submit"

@@ -33,7 +33,7 @@ export default function AddFuelUp() {
         <title>Fuel Tracker</title>
       </Head>
       <div className={styles.centerForm}>
-        <FuelUpForm onSubmit={handleSubmit} />
+        <FuelUpForm onSubmit={handleSubmit} onCancel={router.back} />
       </div>
     </>
   );
