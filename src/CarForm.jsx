@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styles from "../styles/CarForm.module.css";
 import Input from "./Input";
 import Button from "./Button";
-import { validateYear } from "../utils/RegexValidators";
+import { validateYear, validateHasTextInput } from "../utils/RegexValidators";
 import { handleInput } from "../utils/HandleFormInput";
 
 const CarForm = ({ onSubmit, onCancel }) => {
@@ -16,6 +16,9 @@ const CarForm = ({ onSubmit, onCancel }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (carData.name === "") {
+      alert("Nickname must be filled out.");
+    }
     onSubmit(carData);
   };
 
@@ -29,11 +32,17 @@ const CarForm = ({ onSubmit, onCancel }) => {
       <Input
         id="name"
         name="name"
-        labelText="Name"
+        labelText="Nickname"
         defaultValue={carData.name}
         handleChange={(e) => {
           e.preventDefault();
-          handleInput(e.target.value, "name", carData, setCarData);
+          handleInput(
+            e.target.value,
+            "name",
+            carData,
+            setCarData,
+            validateHasTextInput
+          );
         }}
       />
       <Input
