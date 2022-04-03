@@ -1,7 +1,7 @@
 import knex from "../../knex/knex";
 
 const handler = async (req, res) => {
-  const method = req.method;
+  const { method } = req;
 
   if (method === "GET") {
     // console.log(req.query);
