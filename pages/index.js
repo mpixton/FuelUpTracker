@@ -46,6 +46,7 @@ export default () => {
       </Head>
       <div className={styles.navBar}>
         <Button text="Add Fuel Up" onClick={() => router.push("/addFuelUp")} />
+        <Button text="Add Car" onClick={() => router.push("/addCar")} />
       </div>
       <div className={styles.listDisplay}>
         <div className={styles.colHeader}>Car</div>

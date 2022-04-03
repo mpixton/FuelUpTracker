@@ -14,9 +14,8 @@
 }
 
 .navBar {
-    display: grid;
-    grid-template-rows: 1fr;
-    place-items: center;
+    display: flex;
+    justify-content: center;
 }
 
 .emptyList {
