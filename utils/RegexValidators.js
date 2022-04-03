@@ -36,3 +36,8 @@ export const validateYear = (value) => {
   // prettier-ignore
   return validatePattern(value, "^[0-9]{0,4}$")
 };
+
+export const validateHasTextInput = (value) => {
+  // prettier-ignore
+  return validatePattern(value, "^[A-Za-z0-9]+$")
+};
