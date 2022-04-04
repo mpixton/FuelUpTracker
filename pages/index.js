@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 
 import styles from "../styles/Home.module.css";
 import Button from "../src/Button";
-import FuelUpRow from "../src/FuelUpRow";
 import PaginationControls from "../src/PaginationControls";
 
 export default () => {
@@ -58,15 +57,15 @@ export default () => {
         <div className={styles.colHeader}>Economy</div>
         {fuelUps.length &&
           fuelUps.map((e, i) => (
-            <FuelUpRow
-              car={e.car}
-              gallons={e.gallons}
-              passedKey={i.toString()}
-              odometer={e.odometer}
-              ppg={e.price}
-              total={e.total}
-              trip={e.trip}
-            />
+            <React.Fragment key={i.toString()}>
+              <div>{e.car}</div>
+              <div>{e.odometer} miles</div>
+              <div>{e.gallons} gallons</div>
+              <div>${e.price}</div>
+              <div>${e.total}</div>
+              <div>{e.trip} miles</div>
+              <div>{(e.trip / e.gallons).toFixed(2)} mpg</div>
+            </React.Fragment>
           ))}
         {!fuelUps.length && (
           <div className={styles.emptyList}>
