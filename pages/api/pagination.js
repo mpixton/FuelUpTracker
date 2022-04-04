@@ -4,12 +4,12 @@ const handler = async (req, res) => {
   const method = req.method;
 
   if (method === "GET") {
-    const results = await knex.count("fuelup_id").from("fuelup");
+    const results = await knex.count("*", { as: "count" }).from("fuelup");
 
     const { count } = results[0];
 
-    console.log(results);
-    console.log(count);
+    // console.log(results);
+    // console.log(count);
 
     return res.status(200).json({ totalItems: count });
   }
