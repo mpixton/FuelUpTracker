@@ -10,8 +10,9 @@ import { handleInput } from "../utils/HandleFormInput";
 import formStyles from "../styles/Forms.module.css";
 import Input from "./Input";
 import Button from "./Button";
+import Select from "./Select";
 
-const FuelUpForm = ({ onSubmit, onCancel }) => {
+const FuelUpForm = ({ onSubmit, onCancel, carOptions }) => {
   const [fuelUp, setFuelUp] = useState({
     car: "",
     trip: "",
@@ -27,6 +28,7 @@ const FuelUpForm = ({ onSubmit, onCancel }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(fuelUp);
     let tempErrors = { ...errors };
     let valid = true;
     for (const prop in fuelUp) {
@@ -54,11 +56,12 @@ const FuelUpForm = ({ onSubmit, onCancel }) => {
 
   return (
     <form className={formStyles.form} onSubmit={handleSubmit}>
-      <Input
+      <Select
         id="car"
         name="car"
+        options={carOptions ?? []}
+        selected={fuelUp.car}
         labelText="Car"
-        defaultValue={fuelUp.car}
         handleChange={(e) => {
           e.preventDefault();
           handleInput(e.target.value, "car", fuelUp, setFuelUp);
@@ -152,17 +155,10 @@ const FuelUpForm = ({ onSubmit, onCancel }) => {
         <Button
           type="button"
           text="Cancel"
+          color="white"
           onClick={handleCancel}
-          size="large"
         />
-        <Button
-          type="submit"
-          text="Submit"
-          onClick={(e) => {
-            alert("Submit was clicked.");
-          }}
-          size="large"
-        />
+        <Button type="submit" text="Submit" />
       </div>
     </form>
   );
