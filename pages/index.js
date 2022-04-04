@@ -19,7 +19,6 @@ export default () => {
         setFuelUps(data);
       })
       .catch(console.log);
-    setLoading(false);
   };
 
   const fetchTotalItems = () => {
@@ -36,6 +35,7 @@ export default () => {
   useEffect(() => {
     const { pageNum } = router.query;
     fetchFuelUps(pageNum);
+    setLoading(false);
   }, [loading, router.query]);
 
   return (
@@ -55,7 +55,7 @@ export default () => {
         <div className={styles.colHeader}>Total Cost</div>
         <div className={styles.colHeader}>Trip</div>
         <div className={styles.colHeader}>Economy</div>
-        {fuelUps.length &&
+        {fuelUps.length ? (
           fuelUps.map((e, i) => (
             <React.Fragment key={i.toString()}>
               <div>{e.car}</div>
@@ -66,8 +66,8 @@ export default () => {
               <div>{e.trip} miles</div>
               <div>{(e.trip / e.gallons).toFixed(2)} mpg</div>
             </React.Fragment>
-          ))}
-        {!fuelUps.length && (
+          ))
+        ) : (
           <div className={styles.emptyList}>
             No fuel ups yet! Add a fuel up to get started.
           </div>
