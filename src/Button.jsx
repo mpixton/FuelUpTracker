@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../styles/Button.module.css";
+import classNames from "classnames";
 
 const Button = ({
   text,
@@ -29,7 +30,7 @@ const Button = ({
       type={type}
       disabled={!enabled}
       onClick={onClick}
-      className={[buttonStyle[color], buttonSize[size], styles.btn].join(" ")}
+      className={classNames(buttonStyle[color], buttonSize[size], styles.btn)}
     >
       {text}
     </button>
