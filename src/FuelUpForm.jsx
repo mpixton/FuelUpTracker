@@ -37,6 +37,8 @@ const FuelUpForm = ({ onSubmit, onCancel, carOptions }) => {
           1
         )} is required.`;
         valid = false;
+      } else {
+        tempErrors[prop] = "";
       }
     }
     if (!valid) {
