@@ -60,9 +60,9 @@ export default () => {
             <React.Fragment key={i.toString()}>
               <div>{e.car}</div>
               <div>{e.odometer} miles</div>
-              <div>{e.gallons} gallons</div>
-              <div>${e.price}</div>
-              <div>${e.total}</div>
+              <div>{Number.parseFloat(e.gallons).toFixed(3)} gallons</div>
+              <div>${Number.parseFloat(e.price).toFixed(3)}</div>
+              <div>${Number.parseFloat(e.total).toFixed(2)}</div>
               <div>{e.trip} miles</div>
               <div>{(e.trip / e.gallons).toFixed(2)} mpg</div>
             </React.Fragment>
