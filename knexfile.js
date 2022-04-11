@@ -9,6 +9,7 @@ module.exports = {
     connection: {
       filename: "./fueltracker.sqlite",
     },
+    useNullAsDefault: true,
   },
 
   staging: {
