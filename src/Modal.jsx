@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { CSSTransition } from "react-transition-group";
+import React from "react";
 
 import styles from "../styles/Modal.module.css";
 

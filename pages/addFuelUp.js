@@ -3,10 +3,14 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 import styles from "../styles/AddFuelUp.module.css";
+import Modal from "../src/Modal";
+import CarForm from "../src/CarForm";
 import FuelUpForm from "../src/FuelUpForm";
+import Button from "../src/Button";
 
 export default function AddFuelUp() {
   const [carOptions, setCarOptions] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
   const router = useRouter();
 
   // const handleSubmit = (data) => {
@@ -33,6 +37,16 @@ export default function AddFuelUp() {
       });
   };
 
+  const openModal = () => {
+    console.log(modalOpen);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    console.log(modalOpen);
+    setModalOpen(false);
+  };
+
   const handleSubmit = (data) => {
     console.log(data);
   };
@@ -52,6 +66,12 @@ export default function AddFuelUp() {
           onCancel={router.back}
           carOptions={carOptions}
         />
+        <Button onClick={openModal} text="Open modal" />
+        <Modal show={modalOpen}>
+          <div className={styles.centerForm}>
+            <CarForm onCancel={closeModal} />
+          </div>
+        </Modal>
       </div>
     </>
   );
