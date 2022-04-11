@@ -55,6 +55,7 @@ export default () => {
         <div className={styles.colHeader}>Total Cost</div>
         <div className={styles.colHeader}>Trip</div>
         <div className={styles.colHeader}>Economy</div>
+        <div className={styles.colHeader}>Cost Per Mile</div>
         {fuelUps.length ? (
           fuelUps.map((e, i) => (
             <React.Fragment key={i.toString()}>
@@ -64,7 +65,8 @@ export default () => {
               <div>${Number.parseFloat(e.price).toFixed(3)}</div>
               <div>${Number.parseFloat(e.total).toFixed(2)}</div>
               <div>{e.trip} miles</div>
-              <div>{(e.trip / e.gallons).toFixed(2)} mpg</div>
+              <div>{(e.trip / e.gallons).toFixed(3)} mpg</div>
+              <div>${(e.total / e.trip).toFixed(3)}</div>
             </React.Fragment>
           ))
         ) : (
