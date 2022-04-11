@@ -39,5 +39,5 @@ export const validateYear = (value) => {
 
 export const validateHasTextInput = (value) => {
   // prettier-ignore
-  return validatePattern(value, "^[A-Za-z0-9]+$")
+  return validatePattern(value, "^[A-Za-z0-9']*(?:\\s?[A-Za-z0-9']*)*$")
 };

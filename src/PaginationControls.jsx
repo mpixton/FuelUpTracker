@@ -6,17 +6,22 @@ import Button from "./Button";
 
 const PaginationControls = ({ totalItems, pageSize, pageNum, urlBase }) => {
   const router = useRouter();
-  const totalPages = Math.floor(totalItems / pageSize);
+  const totalPages = Math.floor(totalItems / pageSize) - 1;
   const hasPreviousPage = pageNum > 1;
   const hasNextPage = pageNum < totalPages;
 
   return (
     <div className={styles.paginationBar}>
       <Button
+        enabled={pageNum !== 1}
+        text="First Page"
+        color="secondary"
+        onClick={() => router.push(`${urlBase}?pageNum=1`)}
+      />
+      <Button
         enabled={hasPreviousPage}
         color="secondary"
         text="Previous"
-        type="button"
         onClick={() => {
           router.push(`${urlBase}?pageNum=${parseInt(pageNum, 10) - 1}`);
         }}
@@ -26,10 +31,15 @@ const PaginationControls = ({ totalItems, pageSize, pageNum, urlBase }) => {
         enabled={hasNextPage}
         color="secondary"
         text="Next"
-        type="button"
         onClick={() => {
           router.push(`${urlBase}?pageNum=${parseInt(pageNum, 10) + 1}`);
         }}
+      />
+      <Button
+        enabled={pageNum !== totalItems}
+        text="Last Page"
+        color="secondary"
+        onClick={() => router.push(`${urlBase}?pageNum=${totalPages}`)}
       />
     </div>
   );

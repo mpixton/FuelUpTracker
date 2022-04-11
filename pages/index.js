@@ -43,10 +43,7 @@ export default () => {
       <Head>
         <title>Fuel Tracker</title>
       </Head>
-      <div className={styles.navBar}>
-        <Button text="Add Fuel Up" onClick={() => router.push("/addFuelUp")} />
-        <Button text="Add Car" onClick={() => router.push("/addCar")} />
-      </div>
+      <h1 className={styles.header}>Fuel Up Tracker</h1>
       <div className={styles.listDisplay}>
         <div className={styles.colHeader}>Car</div>
         <div className={styles.colHeader}>Odometer</div>
@@ -76,6 +73,13 @@ export default () => {
         )}
       </div>
       <div className={styles.pagination}>
+        <div>
+          <Button
+            text="Add Fuel Up"
+            onClick={() => router.push("/addFuelUp")}
+          />
+          <Button text="Add Car" onClick={() => router.push("/addCar")} />
+        </div>
         <PaginationControls
           pageNum={router.query["pageNum"] ?? 1}
           pageSize={20}

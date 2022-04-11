@@ -1,5 +1,4 @@
 .modal {
-    display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
@@ -11,10 +10,15 @@
     opacity: 1;
     z-index: 2;
     animation-name: modal-in;
-    animation-duration: 500ms;
+    animation-duration: 250ms;
+}
+
+.open {
+    display: flex;
 }
 
 .hide {
+    display: none;
     position: fixed;
     left: 0px;
     right: 0px;
@@ -32,7 +36,7 @@
 @keyframes modal-in {
     from {
         opacity: 0;
-        z-index: inherit;
+        z-index: -50;
         visibility: hidden;
     }
 
@@ -52,7 +56,7 @@
 
     to {
         opacity: 0;
-        z-index: inherit;
-        visibility: hidden;
+        z-index: -50;
+        visibility: hidden; 
     }
 }

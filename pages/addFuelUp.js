@@ -6,11 +6,11 @@ import styles from "../styles/AddFuelUp.module.css";
 import Modal from "../src/Modal";
 import CarForm from "../src/CarForm";
 import FuelUpForm from "../src/FuelUpForm";
-import Button from "../src/Button";
 
 export default function AddFuelUp() {
   const [carOptions, setCarOptions] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [carsFetched, setCarsFetched] = useState(false);
   const router = useRouter();
 
   // const handleSubmit = (data) => {
@@ -51,9 +51,29 @@ export default function AddFuelUp() {
     console.log(data);
   };
 
+  const addCarSubmit = (data) => {
+    fetch("api/car", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => {
+      if (res.ok) {
+        setCarsFetched(false);
+        closeModal();
+        return;
+      }
+      closeModal();
+      return;
+    });
+  };
+
   useEffect(() => {
     getCarOptions();
-  }, []);
+    setCarsFetched(true);
+  }, [carsFetched]);
 
   return (
     <>
@@ -65,11 +85,11 @@ export default function AddFuelUp() {
           onSubmit={handleSubmit}
           onCancel={router.back}
           carOptions={carOptions}
+          addCarOnClick={openModal}
         />
-        <Button onClick={openModal} text="Open modal" />
         <Modal show={modalOpen}>
           <div className={styles.centerForm}>
-            <CarForm onCancel={closeModal} />
+            <CarForm onCancel={closeModal} onSubmit={addCarSubmit} />
           </div>
         </Modal>
       </div>
