@@ -175,6 +175,10 @@ const FuelUpForm = ({ onSubmit, onCancel, carOptions, addCarOnClick }) => {
       {errors.odometer && (
         <div className={formStyles.error}>{errors.odometer}</div>
       )}
+      <div className={formStyles.labelAndInput}>
+        <label htmlFor="date">Date:</label>
+        <input id="date" type="date" />
+      </div>
       <div className={formStyles.btnRow}>
         <Button
           type="button"
