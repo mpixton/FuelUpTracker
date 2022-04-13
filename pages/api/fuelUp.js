@@ -16,6 +16,11 @@ const handler = async (req, res) => {
         "f.price",
         "f.total",
         "f.odometer",
+        "f.vendor",
+        "f.city",
+        "f.state",
+        "f.date",
+        "f.car_id AS car_id",
         "c.name AS car"
       )
       .offset(pageNum * 20)
