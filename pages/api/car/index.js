@@ -1,4 +1,4 @@
-import knex from "../../knex/knex";
+import knex from "../../../knex/knex";
 
 const handler = async (req, res) => {
   const { method } = req;

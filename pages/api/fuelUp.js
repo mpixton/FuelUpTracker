@@ -11,6 +11,7 @@ const handler = async (req, res) => {
       .from("fuelup AS f")
       .join("car AS c", "f.car_id", "c.car_id")
       .select(
+        "f.fuelup_id AS fuelUpId",
         "f.trip",
         "f.gallons",
         "f.price",
@@ -20,7 +21,7 @@ const handler = async (req, res) => {
         "f.city",
         "f.state",
         "f.date",
-        "f.car_id AS car_id",
+        "f.car_id AS carId",
         "c.name AS car"
       )
       .offset(pageNum * 20)
