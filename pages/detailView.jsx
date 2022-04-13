@@ -1,23 +1,19 @@
+import { format, parseISO } from "date-fns";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { useAppContext } from "../utils/AppContext";
+import Button from "../src/Button";
 import FuelUpCard from "../src/FuelUpCard";
 import styles from "../styles/DetailView.module.css";
-import { parseISO, format } from "date-fns";
-import Button from "../src/Button";
+import { useAppContext } from "../utils/AppContext";
 
-export default () => {
-  const [fuelUpFetched, setFuelUpFetched] = useState(false);
+const DetailView = () => {
   const [otherFuelUpsFetched, setOtherFuelUpsFetched] = useState(false);
   const [fuelUp, setFuelUp] = useState({});
   const [otherFuelUps, setOtherFuelUps] = useState([]);
   const [stats, setStats] = useState({});
-  const [statsFetched, setStatsFetched] = useState(false);
   const router = useRouter();
   const { carId, fuelUpId, setCarId, setFuelUpId } = useAppContext();
-
-  console.log("CarId: %s, FuelUpId: %s", carId, fuelUpId);
 
   const fetchFuelUp = (id) => {
     fetch(`/api/details/${id}`)
@@ -59,6 +55,7 @@ export default () => {
     if (window.sessionStorage.getItem("fuelUpId")) {
       setFuelUpId(JSON.parse(window.sessionStorage.getItem("fuelUpId")));
     }
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -173,3 +170,5 @@ export default () => {
     </>
   );
 };
+
+export default DetailView;

@@ -1,32 +1,31 @@
-import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-
-import styles from "../styles/AddFuelUp.module.css";
-import Modal from "../src/Modal";
+import React, { useEffect, useState } from "react";
 import CarForm from "../src/CarForm";
 import FuelUpForm from "../src/FuelUpForm";
+import Modal from "../src/Modal";
+import styles from "../styles/AddFuelUp.module.css";
 
-export default function AddFuelUp() {
+const AddFuelUp = () => {
   const [carOptions, setCarOptions] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [carsFetched, setCarsFetched] = useState(false);
   const router = useRouter();
 
-  // const handleSubmit = (data) => {
-  //   fetch("/api/fuelUp", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json",
-  //     },
-  //     body: JSON.stringify(data),
-  //   }).then((res) => {
-  //     if (res.ok) {
-  //       router.push("/");
-  //     }
-  //   });
-  // };
+  const handleSubmit = (data) => {
+    fetch("/api/fuelUp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => {
+      if (res.ok) {
+        router.push("/");
+      }
+    });
+  };
 
   const getCarOptions = () => {
     fetch("/api/car")
@@ -45,10 +44,6 @@ export default function AddFuelUp() {
   const closeModal = () => {
     console.log(modalOpen);
     setModalOpen(false);
-  };
-
-  const handleSubmit = (data) => {
-    console.log(data);
   };
 
   const addCarSubmit = (data) => {
@@ -95,4 +90,6 @@ export default function AddFuelUp() {
       </div>
     </>
   );
-}
+};
+
+export default AddFuelUp;

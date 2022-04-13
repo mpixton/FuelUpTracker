@@ -16,34 +16,24 @@ module.exports = {
   },
 
   staging: {
-    client: "postgresql",
+    client: "better-sqlite3",
     connection: {
-      database: "my_db",
-      user: "username",
-      password: "password",
+      filename: "./fueltracker.sqlite",
     },
-    pool: {
-      min: 2,
-      max: 10,
-    },
-    migrations: {
-      tableName: "knex_migrations",
+    useNullAsDefault: true,
+    seeds: {
+      directory: "./seeds",
     },
   },
 
   production: {
-    client: "postgresql",
+    client: "better-sqlite3",
     connection: {
-      database: "my_db",
-      user: "username",
-      password: "password",
+      filename: "./fueltracker.sqlite",
     },
-    pool: {
-      min: 2,
-      max: 10,
-    },
-    migrations: {
-      tableName: "knex_migrations",
+    useNullAsDefault: true,
+    seeds: {
+      directory: "./seeds",
     },
   },
 };

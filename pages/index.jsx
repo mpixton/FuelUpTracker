@@ -6,7 +6,7 @@ import FuelUpCard from "../src/FuelUpCard";
 import PaginationControls from "../src/PaginationControls";
 import styles from "../styles/Home.module.css";
 
-export default () => {
+const Index = () => {
   const router = useRouter();
   const [fuelUps, setFuelUps] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -75,3 +75,5 @@ export default () => {
     </>
   );
 };
+
+export default Index;
