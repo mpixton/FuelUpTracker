@@ -1,10 +1,13 @@
 import "../styles/globals.css";
+import { AppWrapper } from "../utils/AppContext";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <main>
-      <Component {...pageProps} />
-    </main>
+    <AppWrapper>
+      <main>
+        <Component {...pageProps} />
+      </main>
+    </AppWrapper>
   );
 }
 
