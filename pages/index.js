@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-
-import styles from "../styles/Home.module.css";
+import React, { useEffect, useState } from "react";
 import Button from "../src/Button";
+import FuelUpCard from "../src/FuelUpCard";
 import PaginationControls from "../src/PaginationControls";
+import styles from "../styles/Home.module.css";
 
 export default () => {
   const router = useRouter();
@@ -44,26 +44,11 @@ export default () => {
         <title>Fuel Tracker</title>
       </Head>
       <h1 className={styles.header}>Fuel Up Tracker</h1>
-      <div className={styles.listDisplay}>
-        <div className={styles.colHeader}>Car</div>
-        <div className={styles.colHeader}>Odometer</div>
-        <div className={styles.colHeader}>Gallons</div>
-        <div className={styles.colHeader}>Price Per Gallon</div>
-        <div className={styles.colHeader}>Total Cost</div>
-        <div className={styles.colHeader}>Trip</div>
-        <div className={styles.colHeader}>Economy</div>
-        <div className={styles.colHeader}>Cost Per Mile</div>
+      <div className={styles.cardDisplay}>
         {fuelUps.length ? (
           fuelUps.map((e, i) => (
             <React.Fragment key={i.toString()}>
-              <div>{e.car}</div>
-              <div>{e.odometer} miles</div>
-              <div>{Number.parseFloat(e.gallons).toFixed(3)} gallons</div>
-              <div>${Number.parseFloat(e.price).toFixed(3)}</div>
-              <div>${Number.parseFloat(e.total).toFixed(2)}</div>
-              <div>{e.trip} miles</div>
-              <div>{(e.trip / e.gallons).toFixed(3)} mpg</div>
-              <div>${(e.total / e.trip).toFixed(3)}</div>
+              <FuelUpCard fuelup={e} />
             </React.Fragment>
           ))
         ) : (
