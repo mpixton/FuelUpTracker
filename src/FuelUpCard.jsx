@@ -1,10 +1,14 @@
-import classNames from "classnames";
-import React, { useState } from "react";
-
+import React from "react";
 import styles from "../styles/FuelUpCard.module.css";
+import Button from "./Button";
+import { useAppContext } from "../utils/AppContext";
+import { useRouter } from "next/router";
 
 export default ({ fuelup }) => {
+  const router = useRouter();
+
   const {
+    fuelUpId,
     car,
     carId,
     trip,
@@ -17,6 +21,8 @@ export default ({ fuelup }) => {
     state,
     vendor,
   } = fuelup;
+
+  const { setCarId, setFuelUpId } = useAppContext();
 
   const handleMouseEnter = (e, value) => {
     e.target.textContent = value;
@@ -73,19 +79,17 @@ export default ({ fuelup }) => {
       >
         {new Date(date).toLocaleDateString()}
       </div>
-      <div
-        className={classNames(styles.location, styles.value)}
-        onMouseEnter={(e) => handleMouseEnter(e, "City, State")}
-        onMouseLeave={(e) => handleMouseLeave(e, `${city}, ${state}`)}
-      >
-        {city}, {state}
-      </div>
-      <div
-        onMouseEnter={(e) => handleMouseEnter(e, "Vendor")}
-        onMouseLeave={(e) => handleMouseLeave(e, vendor)}
-        className={styles.value}
-      >
-        {vendor}
+      <div className={styles.details}>
+        <Button
+          text="View Details"
+          onClick={() => {
+            setFuelUpId(fuelUpId);
+            setCarId(carId);
+            window.sessionStorage.setItem("carId", carId);
+            window.sessionStorage.setItem("fuelUpId", fuelUpId);
+            router.push("/detailView");
+          }}
+        />
       </div>
     </div>
   );

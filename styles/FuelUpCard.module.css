@@ -33,3 +33,7 @@
     border-radius: 0.5rem;
     text-align: center;
 }
+
+.details {
+    grid-column: 1 / -1;
+}
