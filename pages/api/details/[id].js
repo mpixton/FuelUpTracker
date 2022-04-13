@@ -18,7 +18,10 @@ const handler = async (req, res) => {
         "f.state",
         "f.date",
         "f.car_id AS carId",
-        "c.name AS car"
+        "c.name AS car",
+        "c.make",
+        "c.model",
+        "c.year"
       )
       .from("fuelup AS f")
       .join("car AS c", "f.car_id", "c.car_id")

@@ -4,6 +4,9 @@
  */
 exports.seed = async function (knex) {
   // Deletes ALL existing entries
+  await knex.schema.alterTable("fuelup", (table) =>
+    table.dropForeign("car_id")
+  );
   await knex("car").del();
   await knex("car").insert([
     {

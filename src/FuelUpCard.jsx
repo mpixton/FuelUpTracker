@@ -41,7 +41,7 @@ export default ({ fuelup }) => {
         onMouseLeave={(e) => handleMouseLeave(e, trip.toFixed(1))}
         className={styles.value}
       >
-        {trip.toFixed(1)}
+        {trip.toFixed(1)} miles
       </div>
       <div
         onMouseEnter={(e) => handleMouseEnter(e, "Price")}
@@ -69,7 +69,7 @@ export default ({ fuelup }) => {
         onMouseLeave={(e) => handleMouseLeave(e, odometer.toFixed(0))}
         className={styles.value}
       >
-        {odometer.toFixed(0)}
+        {odometer.toLocaleString()}
       </div>
       <div
         onMouseEnter={(e) => handleMouseEnter(e, "Date")}

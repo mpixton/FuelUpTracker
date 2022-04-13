@@ -1,0 +1,68 @@
+.layout {
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-areas: 
+        "details details other other"
+        "details details other other"
+        "agg agg other other"
+        "agg  agg other other"
+    ;
+    padding: 1rem;
+}
+
+.details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-area: details;
+}
+
+.otherFuelUps {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    grid-area: other;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.stats {
+    display: grid;
+    grid-area: agg;
+}
+
+.loading {
+    grid-column: 1 / -1;
+    justify-self: center;
+    place-self: center;
+    font-size: var(--font-size-xl);
+}
+
+.areaHeader {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    grid-column: 1 / span 2;
+    grid-row: 1;
+    place-self: center;
+}
+
+.leftCol {
+    display: grid;
+    grid-auto-rows: min-content;
+    grid-column: 1;
+}
+
+.rightCol {
+    display: grid;
+    grid-auto-rows: min-content;
+    grid-column: 2;
+}
+
+.backBtn {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+    align-self: center;
+}
