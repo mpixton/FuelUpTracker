@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-
-import FuelUpCard from "../src/FuelUpCard";
-import styles from "../styles/Home.module.css";
+import React, { useEffect, useState } from "react";
 import Button from "../src/Button";
+import FuelUpCard from "../src/FuelUpCard";
 import PaginationControls from "../src/PaginationControls";
+import styles from "../styles/Home.module.css";
 
 export default () => {
   const router = useRouter();
@@ -38,6 +37,7 @@ export default () => {
     fetchFuelUps(pageNum);
     setLoading(false);
   }, [loading, router.query]);
+
   return (
     <>
       <Head>
