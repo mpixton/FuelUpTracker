@@ -10,7 +10,7 @@
 
 .cardDisplay {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     place-items: stretch;
     margin: 0 2rem;
     column-gap: 1rem;

@@ -8,8 +8,11 @@
     font-size: var(--font-size-normal);
     outline: none;
     transition: outline var(--input-animation-duration);
-    margin: calc(var(--focus-outline-offset) + var(--focus-outline-width) * 2);
     cursor: default;
+}
+
+.margin {
+    margin: calc(var(--focus-outline-offset) + var(--focus-outline-width) * 2);
 }
 
 .primary {

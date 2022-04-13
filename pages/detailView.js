@@ -2,14 +2,17 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "../utils/AppContext";
+import format from "date-fns/format";
 
 export default () => {
-  const [loaded, setLoaded] = useState(false);
-  const [idsLoaded, setIdsLoaded] = useState(false);
+  const [fuelUpFetched, setFuelUpFetched] = useState(false);
+  const [otherFuelUpsFetched, setOtherFuelUpsFetched] = useState(false);
   const [fuelUp, setFuelUp] = useState({});
-  const [otherFuelUps, setOtherFuelUps] = useState([{}]);
+  const [otherFuelUps, setOtherFuelUps] = useState([]);
   const router = useRouter();
   const { carId, fuelUpId, setCarId, setFuelUpId } = useAppContext();
+
+  console.log("CarId: %s, FuelUpId: %s", carId, fuelUpId);
 
   const fetchFuelUp = (id) => {
     fetch(`/api/details/${id}`)
@@ -18,7 +21,6 @@ export default () => {
         console.log("Success: %s, Data: %o", success, data);
         if (success) {
           const { fuelUp = {} } = data;
-          console.log(fuelUp);
           setFuelUp(fuelUp);
         }
       });
@@ -43,20 +45,21 @@ export default () => {
     if (window.sessionStorage.getItem("fuelUpId")) {
       setFuelUpId(JSON.parse(window.sessionStorage.getItem("fuelUpId")));
     }
-    setIdsLoaded(true);
   }, []);
 
   useEffect(() => {
-    fetchFuelUp(fuelUpId);
+    if (fuelUpId !== null) {
+      fetchFuelUp(fuelUpId);
+      setFuelUpFetched(true);
+    }
   }, [fuelUpId]);
 
   useEffect(() => {
-    fetchOtherCarFuelUps(carId);
+    if (carId !== null) {
+      fetchOtherCarFuelUps(carId);
+      setOtherFuelUpsFetched(true);
+    }
   }, [carId]);
-
-  useEffect(() => {
-    setLoaded(true);
-  }, [fuelUp, otherFuelUps]);
 
   return (
     <>
@@ -64,11 +67,35 @@ export default () => {
         <title>Detail View</title>
       </Head>
       <div>
-        {!loaded ? (
+        {!(fuelUpFetched && otherFuelUpsFetched) ? (
           <div>Loading</div>
         ) : (
           <div>
-            <div>{fuelUp.odometer}</div>
+            <div>{fuelUp.car}</div>
+            <div>Odometer: {fuelUp.odometer}</div>
+            <div>Trip: {fuelUp.trip}</div>
+            <div>Gallons Purchased: {fuelUp.gallons}</div>
+            <div>Total Cost: {fuelUp.total}</div>
+            <div>Price Per Gallon: {fuelUp.price}</div>
+            <div>City: {fuelUp.city}</div>
+            <div>
+              Date Purchased:{" "}
+              {new Date(fuelUp.date).toLocaleDateString("en-us", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+                weekday: "short",
+              })}
+            </div>
+            <div>State: {fuelUp.state}</div>
+            <div>Vendor: {fuelUp.vendor}</div>
+            <div>
+              ${fuelUp.total && (fuelUp.total / fuelUp.trip).toFixed(3)} per
+              mile
+            </div>
+            <div>
+              {fuelUp.trip && (fuelUp.trip / fuelUp.gallons).toFixed(3)} mpg
+            </div>
           </div>
         )}
       </div>

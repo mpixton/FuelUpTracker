@@ -8,8 +8,6 @@ const handler = async (req, res) => {
     const { pageNum } = req.query;
     // console.log(pageNum);
     const fuelUps = await knex
-      .from("fuelup AS f")
-      .join("car AS c", "f.car_id", "c.car_id")
       .select(
         "f.fuelup_id AS fuelUpId",
         "f.trip",
@@ -24,6 +22,8 @@ const handler = async (req, res) => {
         "f.car_id AS carId",
         "c.name AS car"
       )
+      .from("fuelup AS f")
+      .join("car AS c", "f.car_id", "c.car_id")
       .offset(pageNum * 20)
       .limit(20);
 

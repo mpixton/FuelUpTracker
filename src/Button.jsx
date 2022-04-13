@@ -9,6 +9,7 @@ const Button = ({
   enabled = true,
   type = "button",
   size = "normal",
+  addMargin = true,
 }) => {
   const buttonStyle = {
     primary: styles.primary,
@@ -25,12 +26,19 @@ const Button = ({
     xl: styles.xl,
   };
 
+  const margin = styles.margin;
+
   return (
     <button
       type={type}
       disabled={!enabled}
       onClick={onClick}
-      className={classNames(buttonStyle[color], buttonSize[size], styles.btn)}
+      className={classNames(
+        buttonStyle[color],
+        buttonSize[size],
+        addMargin ? margin : "",
+        styles.btn
+      )}
     >
       {text}
     </button>

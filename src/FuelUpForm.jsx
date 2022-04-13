@@ -21,6 +21,10 @@ const FuelUpForm = ({ onSubmit, onCancel, carOptions, addCarOnClick }) => {
     total: "",
     price: "",
     odometer: "",
+    date: "",
+    city: "",
+    state: "",
+    vendor: "",
   });
 
   const [errors, setErrors] = useState({
@@ -73,7 +77,7 @@ const FuelUpForm = ({ onSubmit, onCancel, carOptions, addCarOnClick }) => {
         />
       </div>
       <div>
-        <Button onClick={addCarOnClick} text="Add Car" />
+        <Button onClick={addCarOnClick} text="Add Car" addMargin={false} />
       </div>
       {errors.car && <div className={formStyles.error}>{errors.car}</div>}
       <div className={formStyles.labelAndInput}>
@@ -176,9 +180,58 @@ const FuelUpForm = ({ onSubmit, onCancel, carOptions, addCarOnClick }) => {
         <div className={formStyles.error}>{errors.odometer}</div>
       )}
       <div className={formStyles.labelAndInput}>
-        <label htmlFor="date">Date:</label>
-        <input id="date" type="date" />
+        <Input
+          id="date"
+          type="date"
+          name="date"
+          labelText="Date"
+          defaultValue={fuelUp.date}
+          handleChange={(e) => {
+            e.preventDefault();
+            handleInput(e.target.value, "date", fuelUp, setFuelUp);
+          }}
+        />
       </div>
+      {errors.date && <div className={formStyles.error}>{errors.date}</div>}
+      <div className={formStyles.labelAndInput}>
+        <Input
+          id="city"
+          name="city"
+          labelText="City"
+          defaultValue={fuelUp.city}
+          handleChange={(e) => {
+            e.preventDefault();
+            handleInput(e.target.value, "city", fuelUp, setFuelUp);
+          }}
+        />
+      </div>
+      {errors.city && <div className={formStyles.error}>{errors.city}</div>}
+      <div className={formStyles.labelAndInput}>
+        <Input
+          id="state"
+          name="state"
+          labelText="State"
+          defaultValue={fuelUp.state}
+          handleChange={(e) => {
+            e.preventDefault();
+            handleInput(e.target.value, "state", fuelUp, setFuelUp);
+          }}
+        />
+      </div>
+      {errors.state && <div className={formStyles.error}>{errors.state}</div>}
+      <div className={formStyles.labelAndInput}>
+        <Input
+          id="vendor"
+          name="vendor"
+          labelText="Vendor"
+          defaultValue={fuelUp.vendor}
+          handleChange={(e) => {
+            e.preventDefault();
+            handleInput(e.target.value, "vendor", fuelUp, setFuelUp);
+          }}
+        />
+      </div>
+      {errors.vendor && <div className={formStyles.error}>{errors.vendor}</div>}
       <div className={formStyles.btnRow}>
         <Button
           type="button"

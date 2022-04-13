@@ -3,6 +3,7 @@ import styles from "../styles/FuelUpCard.module.css";
 import Button from "./Button";
 import { useAppContext } from "../utils/AppContext";
 import { useRouter } from "next/router";
+import format from "date-fns/format";
 
 export default ({ fuelup }) => {
   const router = useRouter();
@@ -73,11 +74,11 @@ export default ({ fuelup }) => {
       <div
         onMouseEnter={(e) => handleMouseEnter(e, "Date")}
         onMouseLeave={(e) =>
-          handleMouseLeave(e, new Date(date).toLocaleDateString())
+          handleMouseLeave(e, format(new Date(date), "d MMM yyyy"))
         }
         className={styles.value}
       >
-        {new Date(date).toLocaleDateString()}
+        {format(new Date(date), "d MMM yyyy")}
       </div>
       <div className={styles.details}>
         <Button
