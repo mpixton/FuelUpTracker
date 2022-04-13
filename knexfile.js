@@ -10,6 +10,9 @@ module.exports = {
       filename: "./fueltracker.sqlite",
     },
     useNullAsDefault: true,
+    seeds: {
+      directory: "./seeds",
+    },
   },
 
   staging: {
