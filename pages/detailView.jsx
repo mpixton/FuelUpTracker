@@ -131,9 +131,7 @@ const DetailView = () => {
   }, [carId]);
 
   useEffect(() => {
-    console.log("CarId %s or FuelUpId %s Changed", carId, fuelUpId);
     if (carId !== null && fuelUpId !== null) {
-      console.log("Fire Fetch Other Car");
       fetchOtherCarFuelUps(carId, fuelUpId);
       setTimeout(() => {
         setOtherFuelUpsFetched(true);

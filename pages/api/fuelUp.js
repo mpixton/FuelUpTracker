@@ -45,8 +45,6 @@ const handler = async (req, res) => {
   if (method === "POST") {
     const { body } = req;
 
-    console.log(body);
-
     try {
       await knex.insert(body).into("fuelup").returning("fuelup_id");
       return res.status(201).json({ success: true, data: { msg: "Created" } });

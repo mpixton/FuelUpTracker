@@ -39,7 +39,6 @@ const FuelUpForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(fuelUp);
     let tempErrors = { ...errors };
     let valid = true;
     for (const prop in fuelUp) {
