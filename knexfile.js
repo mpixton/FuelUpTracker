@@ -1,5 +1,7 @@
 // Update with your config settings.
 
+require("dotenv").config({ path: "./.env.local" });
+
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
@@ -27,11 +29,21 @@ module.exports = {
   },
 
   production: {
-    client: "better-sqlite3",
+    client: process.env.DB_FLAVOR,
     connection: {
-      filename: "./fueltracker.sqlite",
+      port: process.env.DB_PORT,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      host: process.env.DB_HOST,
+      database: process.env.DB_DATABASE,
     },
-    useNullAsDefault: true,
+    pool: {
+      min: 2,
+      max: 10,
+    },
+    migrations: {
+      tableName: "knex_migrations",
+    },
     seeds: {
       directory: "./seeds",
     },
