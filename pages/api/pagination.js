@@ -4,14 +4,19 @@ const handler = async (req, res) => {
   const method = req.method;
 
   if (method === "GET") {
-    const results = await knex.count("*", { as: "count" }).from("fuelup");
+    try {
+      const [results] = await knex.count("*", { as: "count" }).from("fuelup");
 
-    const { count } = results[0];
+      const { count } = results;
 
-    // console.log(results);
-    // console.log(count);
-
-    return res.status(200).json({ totalItems: count });
+      return res
+        .status(200)
+        .json({ success: true, data: { totalItems: count } });
+    } catch (err) {
+      return res
+        .status(400)
+        .json({ success: false, data: { msg: err.message } });
+    }
   }
   return res.status(405).json({ msg: "Method Not Allowed" });
 };

@@ -50,14 +50,16 @@
 
 .leftCol {
     display: grid;
-    grid-auto-rows: min-content;
+    grid-auto-rows: max-content;
     grid-column: 1;
+    row-gap: 0.25rem;
 }
 
 .rightCol {
     display: grid;
-    grid-auto-rows: min-content;
+    grid-auto-rows: max-content;
     grid-column: 2;
+    row-gap: 0.25rem;
 }
 
 .backBtn {
@@ -65,4 +67,10 @@
     grid-row: 1;
     justify-self: start;
     align-self: center;
+}
+
+.subHeader {
+    justify-self: center;
+    font-size: var(--font-size-large);
+    font-weight: 600;
 }

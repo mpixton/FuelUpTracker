@@ -10,9 +10,33 @@ const AddFuelUp = () => {
   const [carOptions, setCarOptions] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [carsFetched, setCarsFetched] = useState(false);
+  const [fuelUpPostError, setFuelUpPostError] = useState("");
+  const [carPostError, setCarPostError] = useState("");
   const router = useRouter();
 
+  const getCarOptions = () => {
+    fetch("/api/car")
+      .then((res) => res.json())
+      .then(({ success, data }) => {
+        if (success) {
+          const { cars } = data;
+          const options = cars.map((e) => ({ label: e.name, value: e.car_id }));
+          setCarOptions(options);
+          return;
+        }
+        console.log(data);
+        return;
+      })
+      .catch(console.log);
+  };
+
+  useEffect(() => {
+    getCarOptions();
+    setCarsFetched(true);
+  }, [carsFetched]);
+
   const handleSubmit = (data) => {
+    console.log(data);
     fetch("/api/fuelUp", {
       method: "POST",
       headers: {
@@ -20,30 +44,18 @@ const AddFuelUp = () => {
         Accept: "application/json",
       },
       body: JSON.stringify(data),
-    }).then((res) => {
-      if (res.ok) {
-        router.push("/");
-      }
-    });
-  };
-
-  const getCarOptions = () => {
-    fetch("/api/car")
+    })
       .then((res) => res.json())
-      .then(({ cars }) => {
-        const options = cars.map((e) => ({ label: e.name, value: e.car_id }));
-        setCarOptions(options);
-      });
-  };
-
-  const openModal = () => {
-    console.log(modalOpen);
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    console.log(modalOpen);
-    setModalOpen(false);
+      .then(({ success, data }) => {
+        if (success) {
+          router.push("/");
+          return;
+        }
+        console.log(data);
+        setFuelUpPostError(data.msg);
+        return;
+      })
+      .catch(console.log);
   };
 
   const addCarSubmit = (data) => {
@@ -54,21 +66,27 @@ const AddFuelUp = () => {
         Accept: "application/json",
       },
       body: JSON.stringify(data),
-    }).then((res) => {
-      if (res.ok) {
-        setCarsFetched(false);
-        closeModal();
+    })
+      .then((res) => res.json())
+      .then(({ success, data }) => {
+        if (success) {
+          setCarsFetched(false);
+          closeModal();
+          return;
+        }
+        console.log(data);
+        setCarPostError(data.msg);
         return;
-      }
-      closeModal();
-      return;
-    });
+      });
   };
 
-  useEffect(() => {
-    getCarOptions();
-    setCarsFetched(true);
-  }, [carsFetched]);
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <>
@@ -81,10 +99,15 @@ const AddFuelUp = () => {
           onCancel={router.back}
           carOptions={carOptions}
           addCarOnClick={openModal}
+          submissionError={fuelUpPostError}
         />
         <Modal show={modalOpen}>
           <div className={styles.centerForm}>
-            <CarForm onCancel={closeModal} onSubmit={addCarSubmit} />
+            <CarForm
+              onCancel={closeModal}
+              onSubmit={addCarSubmit}
+              submissionError={carPostError}
+            />
           </div>
         </Modal>
       </div>

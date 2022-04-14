@@ -6,7 +6,7 @@ import Button from "./Button";
 
 const PaginationControls = ({ totalItems, pageSize, pageNum, urlBase }) => {
   const router = useRouter();
-  const totalPages = Math.floor(totalItems / pageSize) - 1;
+  const totalPages = Math.floor(totalItems / pageSize);
   const hasPreviousPage = pageNum > 1;
   const hasNextPage = pageNum < totalPages;
 

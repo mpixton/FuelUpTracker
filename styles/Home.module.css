@@ -33,6 +33,7 @@
     font-size: var(--font-size-xl);
     color: var(--secondary-color);
     font-weight: 600;
+    justify-self: center;
     grid-column: 1 / -1;
 }
 

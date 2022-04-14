@@ -13,9 +13,15 @@ import Input from "./Input";
 import Button from "./Button";
 import Select from "./Select";
 
-const FuelUpForm = ({ onSubmit, onCancel, carOptions, addCarOnClick }) => {
+const FuelUpForm = ({
+  onSubmit,
+  onCancel,
+  carOptions,
+  addCarOnClick,
+  submissionError,
+}) => {
   const [fuelUp, setFuelUp] = useState({
-    car: "",
+    car_id: "",
     trip: "",
     gallons: "",
     total: "",
@@ -232,6 +238,9 @@ const FuelUpForm = ({ onSubmit, onCancel, carOptions, addCarOnClick }) => {
         />
       </div>
       {errors.vendor && <div className={formStyles.error}>{errors.vendor}</div>}
+      {submissionError && (
+        <div className={formStyles.error}>{submissionError}</div>
+      )}
       <div className={formStyles.btnRow}>
         <Button
           type="button"
