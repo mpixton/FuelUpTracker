@@ -1,34 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## What I learned
+- I used React contexts for the first time. I used to store some shared state like the car the user is currently looking at, the fuelup the user is looking at, and the page that the user is on. I mostly used the context to remove clean up the URLs, mostly as a security feature. I was surprised at how easy it was to use the context once I got the hang of it. I'm a fan. I had never used contexts before and I think I'll add them to my toolbox at my job.
+- I custom built all of the CSS for the website. I found I enjoyed CSS a ton when I did it green field on my own with no framework. Bootstrap took the fun out of CSS. I'm not very IE friendly as I'm using almost exclusively grid, and I'm ok with that. I would have made the site responsive, however, I ran into issues with my deployment.
+- I tried deploying on Netlify which was a great experience until my database didn't work. Once that happened, I tried a couple of things. Overall, deployment was not a highlight of this project. When has it ever been? I ended up trying to deploy on an AWS EC2 instance to get my DB to work. This also didn't work. I spent over 4 hours on deployment and decided it wasn't worth it.
+- I also tried switching this to TypeScript in the middle. I wish I had started out with it as a TS project. Switching was a painful experience and I didn't get very far before I decided that I would rather not.
+- I learned about how finnicky JS is. I misspelled a couple of attributes and that cooked me. Was not a fan of that.
