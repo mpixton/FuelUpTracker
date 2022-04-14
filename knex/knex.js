@@ -1,3 +1,5 @@
-const environment = process.env.ENVIRONMENT || "development";
+require("dotenv").config({ path: "../.env.local" });
+
+const environment = process.env.ENVIRONMENT || "production";
 const config = require("../knexfile.js")[environment];
 module.exports = require("knex")(config);
