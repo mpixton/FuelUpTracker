@@ -26,6 +26,7 @@
     grid-area: other;
     overflow-y: scroll;
     overflow-x: hidden;
+    grid-auto-rows: max-content;
 }
 
 .stats {
@@ -38,6 +39,10 @@
     justify-self: center;
     place-self: center;
     font-size: var(--font-size-xl);
+    padding: 0 2rem;
+    text-align: center;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .areaHeader {

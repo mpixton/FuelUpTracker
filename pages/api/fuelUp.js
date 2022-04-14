@@ -4,7 +4,7 @@ const handler = async (req, res) => {
   const { method } = req;
 
   if (method === "GET") {
-    const { pageNum = 0, carId, limit = 20 } = req.query;
+    const { pageNum = 1, limit = 20, carId, exclude } = req.query;
 
     try {
       const fuelUps = await knex
@@ -28,8 +28,10 @@ const handler = async (req, res) => {
         .limit(limit)
         .orderBy("f.odometer", "desc", "c.name")
         .modify((builder) => {
-          if (carId) {
-            builder.where("f.car_id", carId);
+          if (carId && exclude) {
+            builder
+              .where("f.car_id", carId)
+              .andWhereNot("f.fuelup_id", exclude);
           }
         });
 

@@ -72,13 +72,13 @@ const FuelUpForm = ({
       <div className={styles.carSelect}>
         <Select
           id="car"
-          name="car"
+          name="car_id"
           options={carOptions ?? []}
           selected={fuelUp.car}
           labelText="Car"
           handleChange={(e) => {
             e.preventDefault();
-            handleInput(e.target.value, "car", fuelUp, setFuelUp);
+            handleInput(e.target.value, "car_id", fuelUp, setFuelUp);
           }}
         />
       </div>

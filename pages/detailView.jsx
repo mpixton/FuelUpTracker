@@ -34,8 +34,8 @@ const DetailView = () => {
       .catch(console.log);
   };
 
-  const fetchOtherCarFuelUps = (carId) => {
-    fetch(`/api/fuelUp/?carId=${carId}&limit=10`)
+  const fetchOtherCarFuelUps = (carId, fuelUpId) => {
+    fetch(`/api/fuelUp/?carId=${carId}&limit=10&exclude=${fuelUpId}`)
       .then((res) => res.json())
       .then(({ success, data }) => {
         if (success) {
@@ -99,7 +99,7 @@ const DetailView = () => {
 
   useEffect(() => {
     if (carId !== null) {
-      fetchOtherCarFuelUps(carId);
+      fetchOtherCarFuelUps(carId, fuelUpId);
       fetchStats(carId);
       fetchCarDetails(carId);
       setTimeout(() => {
@@ -128,7 +128,8 @@ const DetailView = () => {
               </div>
               <div className={styles.areaHeader}>
                 Fuel Up for {fuelUp.car} on{" "}
-                {format(new Date(parseISO(fuelUp?.date)), "d MMM yyyy")}
+                {fuelUpFetched &&
+                  format(new Date(parseISO(fuelUp?.date)), "d MMM yyyy")}
               </div>
               <div>Odometer: {fuelUp?.odometer.toLocaleString()}</div>
               <div>Trip: {fuelUp.trip}</div>
@@ -197,11 +198,25 @@ const DetailView = () => {
         <div className={styles.otherFuelUps}>
           <div className={styles.areaHeader}>10 Most Recent Fuel Ups</div>
           {otherFuelUpsFetched ? (
-            otherFuelUps.map((e, i) => {
-              return <FuelUpCard fuelup={e} key={i.toString()} />;
-            })
-          ) : otherFuelUps.length ? (
-            <div className={styles.loading}>No Other Fuel Ups!</div>
+            otherFuelUps.length < 2 ? (
+              <>
+                <div className={styles.loading}>No Other Fuel Ups!</div>
+                <div className={styles.loading}>
+                  Add more Fuel Ups to start tracking a history for{" "}
+                  {carDetails?.name}
+                </div>
+                <div className={styles.loading}>
+                  <Button
+                    text="Add Fuel Up"
+                    onClick={() => router.push("/addFuelUp")}
+                  />
+                </div>
+              </>
+            ) : (
+              otherFuelUps.map((e, i) => {
+                return <FuelUpCard fuelup={e} key={i.toString()} />;
+              })
+            )
           ) : (
             <div className={styles.loading}>Loading Other Fuel Ups....</div>
           )}
