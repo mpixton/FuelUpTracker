@@ -5,12 +5,14 @@ import Button from "../src/Button";
 import FuelUpCard from "../src/FuelUpCard";
 import PaginationControls from "../src/PaginationControls";
 import styles from "../styles/Home.module.css";
+import { useAppContext } from "../utils/AppContext";
 
 const Index = () => {
   const router = useRouter();
   const [fuelUps, setFuelUps] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalFuelUps, setTotalFuelUps] = useState(0);
+  const { pageNum } = useAppContext();
 
   const fetchFuelUps = (pageNum) => {
     fetch(`/api/fuelUp?pageNum=${pageNum ?? 1}`)
@@ -47,17 +49,31 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    const { pageNum } = router.query;
     fetchFuelUps(pageNum);
     setLoading(false);
-  }, [loading, router.query]);
+  }, [loading, pageNum]);
 
   return (
     <>
       <Head>
         <title>Fuel Tracker</title>
       </Head>
-      <h1 className={styles.header}>Fuel Up Tracker</h1>
+      <div className={styles.header}>
+        <div className={styles.actions}>
+          <Button
+            text="Add Fuel Up"
+            onClick={() => router.push("/addFuelUp")}
+          />
+          <Button text="Add Car" onClick={() => router.push("/addCar")} />
+        </div>
+        <h1 className={styles.title}>Fuel Up Tracker</h1>
+        <div className={styles.pagination}>
+          <PaginationControls
+            pageSize={20}
+            totalItems={Number.parseInt(totalFuelUps, 10)}
+          />
+        </div>
+      </div>
       <div className={styles.cardDisplay}>
         {fuelUps.length ? (
           fuelUps.map((e, i) => <FuelUpCard fuelup={e} key={i.toString()} />)
@@ -66,21 +82,6 @@ const Index = () => {
             No fuel ups yet! Add a fuel up to get started.
           </div>
         )}
-      </div>
-      <div className={styles.pagination}>
-        <div>
-          <Button
-            text="Add Fuel Up"
-            onClick={() => router.push("/addFuelUp")}
-          />
-          <Button text="Add Car" onClick={() => router.push("/addCar")} />
-        </div>
-        <PaginationControls
-          pageNum={router.query["pageNum"] ?? 1}
-          pageSize={20}
-          totalItems={Number.parseInt(totalFuelUps, 10)}
-          urlBase={router.basePath}
-        />
       </div>
     </>
   );

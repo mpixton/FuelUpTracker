@@ -1,11 +1,13 @@
-import React from "react";
 import { useRouter } from "next/router";
-
+import React from "react";
 import styles from "../styles/PaginationControls.module.css";
+import { useAppContext } from "../utils/AppContext";
 import Button from "./Button";
 
-const PaginationControls = ({ totalItems, pageSize, pageNum, urlBase }) => {
+const PaginationControls = ({ totalItems, pageSize }) => {
   const router = useRouter();
+  const { pageNum, setPageNum } = useAppContext();
+
   const totalPages = Math.ceil(totalItems / pageSize);
   const hasPreviousPage = pageNum > 1;
   const hasNextPage = pageNum < totalPages;
@@ -16,14 +18,14 @@ const PaginationControls = ({ totalItems, pageSize, pageNum, urlBase }) => {
         enabled={pageNum !== 1}
         text="First Page"
         color="secondary"
-        onClick={() => router.push(`${urlBase}?pageNum=1`)}
+        onClick={() => setPageNum(1)}
       />
       <Button
         enabled={hasPreviousPage}
         color="secondary"
         text="Previous"
         onClick={() => {
-          router.push(`${urlBase}?pageNum=${parseInt(pageNum, 10) - 1}`);
+          setPageNum(pageNum - 1);
         }}
       />
       <div className={styles.pageNum}>Page {pageNum}</div>
@@ -32,14 +34,14 @@ const PaginationControls = ({ totalItems, pageSize, pageNum, urlBase }) => {
         color="secondary"
         text="Next"
         onClick={() => {
-          router.push(`${urlBase}?pageNum=${parseInt(pageNum, 10) + 1}`);
+          setPageNum(pageNum + 1);
         }}
       />
       <Button
         enabled={pageNum !== totalItems}
         text="Last Page"
         color="secondary"
-        onClick={() => router.push(`${urlBase}?pageNum=${totalPages}`)}
+        onClick={() => setPageNum(totalPages)}
       />
     </div>
   );

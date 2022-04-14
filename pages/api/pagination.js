@@ -5,7 +5,16 @@ const handler = async (req, res) => {
 
   if (method === "GET") {
     try {
-      const [results] = await knex.count("*", { as: "count" }).from("fuelup");
+      const { carId = null } = req.query;
+
+      const [results] = await knex
+        .count("*", { as: "count" })
+        .from("fuelup")
+        .modify((builder) => {
+          if (carId !== null) {
+            builder.where("car_id", carId);
+          }
+        });
 
       const { count } = results;
 

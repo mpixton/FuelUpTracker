@@ -23,7 +23,7 @@ export default ({ fuelup }) => {
     vendor,
   } = fuelup;
 
-  const { setCarId, setFuelUpId } = useAppContext();
+  const { setCarId, setFuelUpId, setPageNum } = useAppContext();
 
   const handleMouseEnter = (e, value) => {
     e.target.textContent = value;
@@ -86,6 +86,7 @@ export default ({ fuelup }) => {
           onClick={() => {
             setFuelUpId(fuelUpId);
             setCarId(carId);
+            setPageNum(1);
             window.sessionStorage.setItem("carId", carId);
             window.sessionStorage.setItem("fuelUpId", fuelUpId);
             router.push("/detailView");

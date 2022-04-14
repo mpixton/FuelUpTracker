@@ -8,12 +8,15 @@ const AppContext = createContext();
 export const AppWrapper = ({ children }) => {
   const [carId, setCarId] = useState(null);
   const [fuelUpId, setFuelUpId] = useState(null);
+  const [pageNum, setPageNum] = useState(1);
 
   const sharedState = {
     carId,
     setCarId,
     fuelUpId,
     setFuelUpId,
+    pageNum,
+    setPageNum,
   };
 
   return (

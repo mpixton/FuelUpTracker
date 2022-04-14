@@ -6,18 +6,23 @@ import Button from "../src/Button";
 import FuelUpCard from "../src/FuelUpCard";
 import styles from "../styles/DetailView.module.css";
 import { useAppContext } from "../utils/AppContext";
+import PaginationControls from "../src/PaginationControls";
 
 const DetailView = () => {
   const [fuelUp, setFuelUp] = useState({});
   const [otherFuelUps, setOtherFuelUps] = useState([]);
   const [stats, setStats] = useState({});
   const [carDetails, setCarDetails] = useState({});
+  const [otherFuelUpsCount, setOtherFuelUpsCount] = useState(0);
   const [otherFuelUpsFetched, setOtherFuelUpsFetched] = useState(false);
   const [fuelUpFetched, setFuelUpFetched] = useState(false);
   const [statsFetched, setStatsFetched] = useState(false);
   const [carDetailsFetched, setCarDetailsFetched] = useState(false);
+  const [otherFuelUpsCountFetched, setOtherFuelUpsCountFetched] =
+    useState(false);
   const router = useRouter();
-  const { carId, fuelUpId, setCarId, setFuelUpId } = useAppContext();
+  const { carId, fuelUpId, pageNum, setCarId, setFuelUpId, setPageNum } =
+    useAppContext();
 
   const fetchFuelUp = (id) => {
     fetch(`/api/details/${id}`)
@@ -35,7 +40,9 @@ const DetailView = () => {
   };
 
   const fetchOtherCarFuelUps = (carId, fuelUpId) => {
-    fetch(`/api/fuelUp/?carId=${carId}&limit=10&exclude=${fuelUpId}`)
+    fetch(
+      `/api/fuelUp/?carId=${carId}&limit=10&exclude=${fuelUpId}&pageNum=${pageNum}`
+    )
       .then((res) => res.json())
       .then(({ success, data }) => {
         if (success) {
@@ -78,6 +85,19 @@ const DetailView = () => {
       });
   };
 
+  const fetchOtherFuelUpsCount = (carId) => {
+    fetch(`/api/pagination?carId=${carId}`)
+      .then((res) => res.json())
+      .then(({ success, data }) => {
+        if (success) {
+          const { totalItems } = data;
+          setOtherFuelUpsCount(totalItems);
+          return;
+        }
+      })
+      .catch(console.log);
+  };
+
   useEffect(() => {
     if (window.sessionStorage.getItem("carId")) {
       setCarId(JSON.parse(window.sessionStorage.getItem("carId")));
@@ -99,16 +119,27 @@ const DetailView = () => {
 
   useEffect(() => {
     if (carId !== null) {
-      fetchOtherCarFuelUps(carId, fuelUpId);
       fetchStats(carId);
       fetchCarDetails(carId);
+      fetchOtherFuelUpsCount(carId);
       setTimeout(() => {
-        setOtherFuelUpsFetched(true);
         setStatsFetched(true);
         setCarDetailsFetched(true);
+        setOtherFuelUpsCountFetched(true);
       }, 250);
     }
   }, [carId]);
+
+  useEffect(() => {
+    console.log("CarId %s or FuelUpId %s Changed", carId, fuelUpId);
+    if (carId !== null && fuelUpId !== null) {
+      console.log("Fire Fetch Other Car");
+      fetchOtherCarFuelUps(carId, fuelUpId);
+      setTimeout(() => {
+        setOtherFuelUpsFetched(true);
+      }, 250);
+    }
+  }, [carId, fuelUpId, pageNum]);
 
   return (
     <>
@@ -122,15 +153,19 @@ const DetailView = () => {
               <div className={styles.backBtn}>
                 <Button
                   text="Back"
-                  onClick={() => router.push("/")}
+                  onClick={() => {
+                    setPageNum(1);
+                    router.push("/");
+                  }}
                   addMargin={false}
                 />
               </div>
-              <div className={styles.areaHeader}>
-                Fuel Up for {fuelUp.car} on{" "}
-                {fuelUpFetched &&
-                  format(new Date(parseISO(fuelUp?.date)), "d MMM yyyy")}
-              </div>
+              {fuelUpFetched && (
+                <div className={styles.areaHeader}>
+                  Fuel Up for {fuelUp?.car} on{" "}
+                  {format(new Date(parseISO(fuelUp?.date)), "d MMM yyyy")}
+                </div>
+              )}
               <div>Odometer: {fuelUp?.odometer.toLocaleString()}</div>
               <div>Trip: {fuelUp.trip}</div>
               <div>Gallons Purchased: {fuelUp.gallons}</div>
@@ -152,7 +187,7 @@ const DetailView = () => {
           )}
         </div>
         <div className={styles.stats}>
-          {statsFetched ? (
+          {statsFetched && carDetailsFetched ? (
             <>
               <div className={styles.areaHeader}>{fuelUp.car} Stats</div>
               <div className={styles.leftCol}>
@@ -196,11 +231,11 @@ const DetailView = () => {
           )}
         </div>
         <div className={styles.otherFuelUps}>
-          <div className={styles.areaHeader}>10 Most Recent Fuel Ups</div>
-          {otherFuelUpsFetched ? (
+          <div className={styles.areaHeader}>Recent Fuel Ups</div>
+          {otherFuelUpsFetched && otherFuelUpsCountFetched ? (
             otherFuelUps.length < 2 ? (
               <>
-                <div className={styles.loading}>No Other Fuel Ups!</div>
+                <div className={styles.loading}>No other Fuel Ups!</div>
                 <div className={styles.loading}>
                   Add more Fuel Ups to start tracking a history for{" "}
                   {carDetails?.name}
@@ -213,9 +248,17 @@ const DetailView = () => {
                 </div>
               </>
             ) : (
-              otherFuelUps.map((e, i) => {
-                return <FuelUpCard fuelup={e} key={i.toString()} />;
-              })
+              <>
+                {otherFuelUps.map((e, i) => {
+                  return <FuelUpCard fuelup={e} key={i.toString()} />;
+                })}
+                <div className={styles.pagination}>
+                  <PaginationControls
+                    pageSize={10}
+                    totalItems={otherFuelUpsCount}
+                  />
+                </div>
+              </>
             )
           ) : (
             <div className={styles.loading}>Loading Other Fuel Ups....</div>

@@ -27,6 +27,7 @@
     overflow-y: scroll;
     overflow-x: hidden;
     grid-auto-rows: max-content;
+    padding: 1rem;
 }
 
 .stats {
@@ -78,4 +79,8 @@
     justify-self: center;
     font-size: var(--font-size-large);
     font-weight: 600;
+}
+
+.pagination {
+    grid-column: 1 / -1;
 }
