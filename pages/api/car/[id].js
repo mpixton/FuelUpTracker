@@ -4,28 +4,23 @@ const handler = async (req, res) => {
   const { method } = req;
 
   if (method === "GET") {
-    const { id, limit = 10 } = req.query;
-    const fuelUps = await knex
-      .select(
-        "f.fuelup_id AS fuelUpId",
-        "f.trip",
-        "f.gallons",
-        "f.price",
-        "f.total",
-        "f.odometer",
-        "f.vendor",
-        "f.city",
-        "f.state",
-        "f.date",
-        "f.car_id AS carId",
-        "c.name AS car"
-      )
-      .from("fuelup AS f")
-      .join("car AS c", "f.car_id", "c.car_id")
-      .where("f.car_id", id)
-      .orderBy("f.odometer", "DESC")
-      .limit(parseInt(limit, 10));
-    return res.status(200).json({ success: true, data: { fuelUps: fuelUps } });
+    try {
+      const { id, limit = 10 } = req.query;
+      if (id === undefined) {
+        return res.send(404).json({
+          success: false,
+          data: { msg: "Not All Parameters Provided" },
+        });
+      }
+      const [car] = await knex
+        .select("name", "make", "model", "year")
+        .from("car");
+      return res.status(200).json({ success: true, data: { car: car } });
+    } catch (err) {
+      return res
+        .status(400)
+        .json({ success: false, data: { msg: err.message } });
+    }
   }
   return res.status(403).json({ msg: "Method Not Allowed" });
 };

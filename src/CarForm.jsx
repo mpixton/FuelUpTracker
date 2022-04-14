@@ -6,7 +6,7 @@ import Button from "./Button";
 import { validateYear, validateHasTextInput } from "../utils/RegexValidators";
 import { handleInput } from "../utils/HandleFormInput";
 
-const CarForm = ({ onSubmit, onCancel }) => {
+const CarForm = ({ onSubmit, onCancel, submissionError }) => {
   const [carData, setCarData] = useState({
     name: "",
     make: "",
@@ -21,13 +21,15 @@ const CarForm = ({ onSubmit, onCancel }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     let tempErrors = { ...errors };
+    let valid = true;
     if (carData.name === "") {
       tempErrors.name = "Nickname must be filled out.";
+      setErrors({
+        ...errors,
+        ...tempErrors,
+      });
+      return;
     }
-    setErrors({
-      ...errors,
-      ...tempErrors,
-    });
     onSubmit(carData);
   };
 
@@ -46,7 +48,6 @@ const CarForm = ({ onSubmit, onCancel }) => {
           defaultValue={carData.name}
           handleChange={(e) => {
             e.preventDefault();
-            console.log(e.target.value);
             validateHasTextInput(e.target.value);
             handleInput(
               e.target.value,
@@ -101,6 +102,9 @@ const CarForm = ({ onSubmit, onCancel }) => {
           }}
         />
       </div>
+      {submissionError && (
+        <div className={formStyles.error}>{submissionError}</div>
+      )}
       <div className={formStyles.btnRow}>
         <Button
           type="button"

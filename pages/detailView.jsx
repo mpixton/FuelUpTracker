@@ -8,10 +8,14 @@ import styles from "../styles/DetailView.module.css";
 import { useAppContext } from "../utils/AppContext";
 
 const DetailView = () => {
-  const [otherFuelUpsFetched, setOtherFuelUpsFetched] = useState(false);
   const [fuelUp, setFuelUp] = useState({});
   const [otherFuelUps, setOtherFuelUps] = useState([]);
   const [stats, setStats] = useState({});
+  const [carDetails, setCarDetails] = useState({});
+  const [otherFuelUpsFetched, setOtherFuelUpsFetched] = useState(false);
+  const [fuelUpFetched, setFuelUpFetched] = useState(false);
+  const [statsFetched, setStatsFetched] = useState(false);
+  const [carDetailsFetched, setCarDetailsFetched] = useState(false);
   const router = useRouter();
   const { carId, fuelUpId, setCarId, setFuelUpId } = useAppContext();
 
@@ -20,21 +24,29 @@ const DetailView = () => {
       .then((res) => res.json())
       .then(({ success, data }) => {
         if (success) {
-          const { fuelUp = {} } = data;
+          const { fuelUp } = data;
           setFuelUp(fuelUp);
+          return;
         }
-      });
+        console.log(data);
+        return;
+      })
+      .catch(console.log);
   };
 
   const fetchOtherCarFuelUps = (carId) => {
-    fetch(`/api/car/${carId}?limit=10`)
+    fetch(`/api/fuelUp/?carId=${carId}&limit=10`)
       .then((res) => res.json())
       .then(({ success, data }) => {
         if (success) {
           const { fuelUps } = data;
           setOtherFuelUps(fuelUps);
+          return;
         }
-      });
+        console.log(data);
+        return;
+      })
+      .catch(console.log);
   };
 
   const fetchStats = (carId) => {
@@ -44,7 +56,25 @@ const DetailView = () => {
         if (success) {
           const { stats } = data;
           setStats(stats);
+          return;
         }
+        console.log(data);
+        return;
+      })
+      .catch(console.log);
+  };
+
+  const fetchCarDetails = (carId) => {
+    fetch(`/api/car/${carId}`)
+      .then((res) => res.json())
+      .then(({ success, data }) => {
+        if (success) {
+          const { car } = data;
+          setCarDetails(car);
+          return;
+        }
+        console.log(data);
+        return;
       });
   };
 
@@ -63,7 +93,7 @@ const DetailView = () => {
       fetchFuelUp(fuelUpId);
       setTimeout(() => {
         setFuelUpFetched(true);
-      }, 500);
+      }, 250);
     }
   }, [fuelUpId]);
 
@@ -71,10 +101,12 @@ const DetailView = () => {
     if (carId !== null) {
       fetchOtherCarFuelUps(carId);
       fetchStats(carId);
+      fetchCarDetails(carId);
       setTimeout(() => {
         setOtherFuelUpsFetched(true);
         setStatsFetched(true);
-      }, 500);
+        setCarDetailsFetched(true);
+      }, 250);
     }
   }, [carId]);
 
@@ -85,7 +117,7 @@ const DetailView = () => {
       </Head>
       <div className={styles.layout}>
         <div className={styles.details}>
-          {Object.keys(fuelUp).length ? (
+          {fuelUpFetched ? (
             <>
               <div className={styles.backBtn}>
                 <Button
@@ -96,7 +128,7 @@ const DetailView = () => {
               </div>
               <div className={styles.areaHeader}>
                 Fuel Up for {fuelUp.car} on{" "}
-                {format(new Date(parseISO(fuelUp?.date)), "d MMM yyyy")}{" "}
+                {format(new Date(parseISO(fuelUp?.date)), "d MMM yyyy")}
               </div>
               <div>Odometer: {fuelUp?.odometer.toLocaleString()}</div>
               <div>Trip: {fuelUp.trip}</div>
@@ -119,11 +151,11 @@ const DetailView = () => {
           )}
         </div>
         <div className={styles.stats}>
-          {Object.keys(stats).length ? (
+          {statsFetched ? (
             <>
               <div className={styles.areaHeader}>{fuelUp.car} Stats</div>
               <div className={styles.leftCol}>
-                <div>Average Stats</div>
+                <div className={styles.subHeader}>Average Stats</div>
                 <div>Average Miles Per Trip: {stats.avgTrip?.toFixed(3)}</div>
                 <div>
                   Average Total Cost Per Fuel Up: {stats.avgTotal?.toFixed(3)}
@@ -144,10 +176,18 @@ const DetailView = () => {
                 </div>
               </div>
               <div className={styles.rightCol}>
-                <div>Total Stats</div>
-                <div>Total Miles Tracked: {stats?.totalTrip}</div>
-                <div>Total Gallons Tracked: {stats?.totalGallons}</div>
-                <div>Total Cost of Fuel Ups Tracked: {stats?.totalTotal}</div>
+                <div className={styles.subHeader}>Total Stats</div>
+                <div>Total Miles Tracked: {stats?.totalTrip.toFixed()}</div>
+                <div>
+                  Total Gallons Tracked: {stats?.totalGallons.toFixed(0)}
+                </div>
+                <div>
+                  Total Cost of Fuel Ups Tracked: {stats?.totalTotal.toFixed(0)}
+                </div>
+                <div className={styles.subHeader}>Car Details</div>
+                <div>Make: {carDetails?.make}</div>
+                <div>Model: {carDetails?.model}</div>
+                <div>Year: {carDetails?.year}</div>
               </div>
             </>
           ) : (
@@ -156,11 +196,11 @@ const DetailView = () => {
         </div>
         <div className={styles.otherFuelUps}>
           <div className={styles.areaHeader}>10 Most Recent Fuel Ups</div>
-          {otherFuelUps.length ? (
+          {otherFuelUpsFetched ? (
             otherFuelUps.map((e, i) => {
               return <FuelUpCard fuelup={e} key={i.toString()} />;
             })
-          ) : otherFuelUpsFetched ? (
+          ) : otherFuelUps.length ? (
             <div className={styles.loading}>No Other Fuel Ups!</div>
           ) : (
             <div className={styles.loading}>Loading Other Fuel Ups....</div>

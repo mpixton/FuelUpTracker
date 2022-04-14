@@ -15,8 +15,14 @@ const Index = () => {
   const fetchFuelUps = (pageNum) => {
     fetch(`/api/fuelUp?pageNum=${pageNum ?? 1}`)
       .then((res) => res.json())
-      .then(({ data }) => {
-        setFuelUps(data);
+      .then(({ success, data }) => {
+        if (success) {
+          const { fuelUps } = data;
+          setFuelUps(fuelUps);
+          return;
+        }
+        console.log(data);
+        return;
       })
       .catch(console.log);
   };
@@ -24,7 +30,15 @@ const Index = () => {
   const fetchTotalItems = () => {
     fetch("/api/pagination")
       .then((res) => res.json())
-      .then(({ totalItems }) => setTotalFuelUps(totalItems))
+      .then(({ success, data }) => {
+        if (success) {
+          const { totalItems } = data;
+          setTotalFuelUps(totalItems);
+          return;
+        }
+        console.log(data);
+        return;
+      })
       .catch(console.log);
   };
 
@@ -46,11 +60,7 @@ const Index = () => {
       <h1 className={styles.header}>Fuel Up Tracker</h1>
       <div className={styles.cardDisplay}>
         {fuelUps.length ? (
-          fuelUps.map((e, i) => (
-            <React.Fragment key={i.toString()}>
-              <FuelUpCard fuelup={e} />
-            </React.Fragment>
-          ))
+          fuelUps.map((e, i) => <FuelUpCard fuelup={e} key={i.toString()} />)
         ) : (
           <div className={styles.emptyList}>
             No fuel ups yet! Add a fuel up to get started.

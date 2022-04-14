@@ -4,20 +4,26 @@ const handler = async (req, res) => {
   const { method } = req;
 
   if (method === "GET") {
-    const { id } = req.query;
-    const [stats] = await knex
-      .select("f.car_id AS carId")
-      .avg("f.trip AS avgTrip")
-      .avg("f.gallons AS avgGallons")
-      .avg("f.price AS avgPrice")
-      .avg("f.total AS avgTotal")
-      .sum("f.trip AS totalTrip")
-      .sum("f.gallons AS totalGallons")
-      .sum("f.total AS totalTotal")
-      .from("fuelup AS f")
-      .groupBy("f.car_id")
-      .where("f.car_id", id);
-    return res.status(200).json({ success: true, data: { stats: stats } });
+    try {
+      const { id } = req.query;
+      const [stats] = await knex
+        .select("f.car_id AS carId")
+        .avg("f.trip AS avgTrip")
+        .avg("f.gallons AS avgGallons")
+        .avg("f.price AS avgPrice")
+        .avg("f.total AS avgTotal")
+        .sum("f.trip AS totalTrip")
+        .sum("f.gallons AS totalGallons")
+        .sum("f.total AS totalTotal")
+        .from("fuelup AS f")
+        .groupBy("f.car_id")
+        .where("f.car_id", id);
+      return res.status(200).json({ success: true, data: { stats: stats } });
+    } catch (err) {
+      return res
+        .status(400)
+        .json({ success: false, data: { msg: err.message } });
+    }
   }
   return res.status(403).json({ msg: "Method Not Allowed" });
 };
