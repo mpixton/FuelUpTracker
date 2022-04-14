@@ -105,6 +105,9 @@ const DetailView = () => {
     if (window.sessionStorage.getItem("fuelUpId")) {
       setFuelUpId(JSON.parse(window.sessionStorage.getItem("fuelUpId")));
     }
+    if (carId === null && fuelUpId === null) {
+      router.push("/");
+    }
     // eslint-disable-next-line
   }, []);
 
